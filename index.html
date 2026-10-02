@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>พิมพ์ศัพท์ TOEIC</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E6ECF2;--paper:#F8FAFC;--ink:#16233B;--muted:#5B6B82;--line:#C6D1DD;
+  --pencil:#F2C230;--pencil-ink:#6B5200;--bad:#D14343;--good:#2E8B57;
+  --lp:#E57373;--lr:#F0A04B;--lm:#D9B92E;--li:#5DB866;--ri:#3FAEA3;--rm:#5C9EDB;--rr:#8E7CC3;--rp:#D77FB0;--th:#98A6B6;
+  --sans:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111925;--paper:#1A2433;--ink:#E6ECF4;--muted:#93A3B8;--line:#2D3B50;--pencil-ink:#F2C230;
+}}
+:root[data-theme="dark"]{--bg:#111925;--paper:#1A2433;--ink:#E6ECF4;--muted:#93A3B8;--line:#2D3B50;--pencil-ink:#F2C230;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{transition:background .25s,color .25s;margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--pencil);outline-offset:2px}
+.app{max-width:760px;margin:0 auto;padding:16px 14px 40px}
+.hidden{display:none!important}
+
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand h1{margin:0;font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
+.brand h1 b{background:var(--pencil);color:#16233B;padding:0 .3em;border-radius:3px}
+.brand span{color:var(--muted);font-size:.85rem}
+.hdrbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pfoot{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0 18px;font-size:.82rem;color:var(--muted)}
+.pfoot a{color:var(--ink);font-weight:600;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:var(--paper)}
+.pfoot a:hover{border-color:var(--pencil)}
+.pfoot a:focus-visible{outline:3px solid var(--pencil);outline-offset:2px}
+#appVer{font-family:var(--mono);font-size:.75rem}
+.pbrand{margin:28px 0 8px;display:flex;justify-content:center}
+.pbrand a{display:flex;align-items:center;gap:12px;padding:10px 16px 10px 10px;border-radius:12px;background:#F6EFDF;color:#1F5F59;text-decoration:none;border:2px solid #2A8C82;transition:transform .15s}
+.pbrand a:hover{transform:translateY(-2px)}
+.pbrand a:focus-visible{outline:3px solid var(--pencil);outline-offset:2px}
+.blogo{display:flex;align-items:center;justify-content:center;min-width:44px;height:44px;border-radius:10px;background:#2A8C82;color:#F6EFDF;font-family:Lora,Georgia,'Times New Roman',serif;font-weight:700;font-size:1.05rem;padding:0 8px}
+.blogo img{height:44px;width:auto;display:block;border-radius:10px}
+.blogo.hasimg{background:none;padding:0}
+.btxt{display:flex;flex-direction:column;line-height:1.3}
+.btxt small{font-size:.78rem;opacity:.8}
+.btxt b{font-size:.95rem}
+.iconbtn{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:6px 10px;font-size:.9rem}
+
+/* home */
+.intro{color:var(--muted);margin:0 0 18px;max-width:60ch}
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:3px;margin-bottom:6px}
+.seg button{border:0;background:transparent;padding:7px 14px;border-radius:7px;font-size:.92rem;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:600}
+.modehint{font-size:.85rem;color:var(--muted);margin:0 0 20px}
+.tower-wrap{margin-top:6px}
+.roof{display:flex;justify-content:center;margin-bottom:-2px}
+.roof span{background:linear-gradient(#F3DC8A,#C9A03C);color:#2B1D05;border:2px solid #9C7A1E;border-bottom:0;font-weight:700;font-size:.9rem;padding:4px 16px;border-radius:6px 6px 0 0;letter-spacing:.02em}
+.roof span b{color:#7A1C1C}
+.tower{position:relative;list-style:none;margin:0;padding:0;border:2px solid #9C7A1E;border-bottom:0;border-radius:8px 8px 0 0;background:var(--paper);overflow:hidden}
+.floor{display:grid;grid-template-columns:88px 1fr;border-bottom:1px solid var(--line)}
+.floor:last-child{border-bottom:0}
+.shaftcell{background:color-mix(in srgb,var(--ink) 9%,var(--paper));border-right:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:1.25rem;font-weight:700;color:var(--muted)}
+.lvl{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;width:100%;text-align:left;background:transparent;border:0;padding:14px 14px}
+.lvl{position:relative;overflow:hidden;isolation:isolate}
+.fart{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.fart svg,.bart svg{width:100%;height:100%;display:block}
+.fart::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 0%,var(--paper) 28%,color-mix(in srgb,var(--paper) 82%,transparent) 46%,color-mix(in srgb,var(--paper) 12%,transparent) 70%,transparent 100%)}
+.lvl:not(:disabled):hover{box-shadow:inset 5px 0 0 var(--pencil)}
+.lvl:not(:disabled):hover .fart svg{filter:brightness(1.08) saturate(1.1)}
+.lvl:disabled{cursor:not-allowed}
+.lvl .t{font-weight:700;font-size:1.08rem}
+.lvl .t small{display:block;font-weight:400;color:var(--muted);font-size:.82rem;margin-top:-2px}
+.lvl .ex{grid-column:1;display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:6px}
+.lvl .ex span{font-family:var(--mono);font-size:.82rem;background:var(--bg);border-radius:4px;padding:1px 7px}
+.lvl .best{background:color-mix(in srgb,var(--paper) 88%,transparent);border-radius:6px;padding:4px 8px;grid-row:1/3;grid-column:2;text-align:right;font-size:.8rem;color:var(--muted);line-height:1.35}
+.lvl .best strong{display:block;font-family:var(--mono);font-size:1.15rem;color:var(--ink)}
+.lvl .pass{display:inline-block;margin-top:3px;font-size:.75rem;font-weight:600;color:var(--good)}
+.floor.locked .lvl .t,.floor.locked .lvl .ex,.floor.locked .lvl .best{opacity:.5}
+.floor.locked .fart svg{filter:brightness(.28) saturate(.2)}
+.floor.gold{border-bottom:2px solid #B8902F}
+.floor.gold .shaftcell{color:#B8902F}
+.floor.deck{border-bottom:3px solid #9C7A1E}
+.floor.deck .shaftcell{background:#141B3A;color:#F3DC8A}
+.bart{height:78px;margin:-18px -18px 14px;border-radius:0 6px 0 0;overflow:hidden;border-bottom:3px solid #B8902F}
+@media (max-width:480px){.bart{height:64px}.fart::after{background:linear-gradient(90deg,var(--paper) 0%,var(--paper) 42%,color-mix(in srgb,var(--paper) 85%,transparent) 58%,color-mix(in srgb,var(--paper) 20%,transparent) 80%,transparent 100%)}}
+.floor.locked .lvl .ex span{filter:blur(2.5px)}
+.floor.here .shaftcell{color:transparent}
+.floor.fresh .lvl::after{content:"";position:absolute;inset:0;pointer-events:none;background:var(--pencil);animation:fresh 1.6s ease-out forwards}
+@keyframes fresh{0%,40%{opacity:.35}100%{opacity:0}}
+.car{position:absolute;left:6px;width:76px;border-radius:5px 5px 3px 3px;background:#2B2118;border:2px solid #B8902F;box-shadow:0 0 0 1px #6B5214,0 3px 0 #6B5214;transition:top 1.1s cubic-bezier(.45,0,.2,1),height .3s;pointer-events:none;display:flex;flex-direction:column;align-items:center;z-index:2}
+.car::before{content:"";position:absolute;bottom:calc(100% + 2px);left:50%;width:2px;margin-left:-1px;height:3000px;background:repeating-linear-gradient(#9AA0A7 0 3px,#5E636D 3px 6px)}
+.car b{display:block;margin-top:2px;min-width:24px;text-align:center;font-family:var(--mono);font-size:.68rem;font-weight:700;color:#FFB347;background:#140E08;border:1px solid #6B5214;border-radius:3px;line-height:1.3;padding:0 3px}
+.car b::before{content:"▲ ";font-size:.5rem;vertical-align:1px;opacity:.35}
+.car.closed b::before{opacity:1}
+.car .cab{position:relative;flex:1;width:calc(100% - 6px);margin:3px 0;border-radius:2px;overflow:hidden;background:linear-gradient(#FFE7A3 0 2px,#4A3A26 2px,#3A2C1C 70%,#2A1F14);display:flex;align-items:flex-end;justify-content:center;gap:1px}
+.car .cab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:#B8902F}
+.car .pu,.car .ck{position:relative;z-index:1;margin-bottom:3px;line-height:0}
+.car .pu svg{width:30px;height:37.5px;shape-rendering:crispEdges}
+.car .ck svg{width:30px;height:30px;shape-rendering:crispEdges}
+.car .pu{animation:bob 1.2s steps(2) infinite}
+.car .ck{transform-origin:50% 100%;animation:jig 1.6s ease-in-out infinite}
+.car .door{position:absolute;top:0;bottom:0;width:50%;z-index:2;background:linear-gradient(90deg,#B8902F,#F3DC8A 45%,#C9A03C);transition:transform .4s ease}
+.car .door.l{left:0;transform:translateX(-101%);border-right:1px solid #6B5214}
+.car .door.r{right:0;transform:translateX(101%);border-left:1px solid #6B5214}
+.car.closed .door.l,.car.closed .door.r{transform:none}
+.car.arrive .pu{animation:jump .5s ease-out 2}
+.car.arrive .ck{animation:wob .5s ease-out 2}
+@media (prefers-reduced-motion:reduce){.car .pu,.car .ck,.car.arrive .pu,.car.arrive .ck{animation:none}.car .door{transition:none}}
+.ground{border-top:5px solid var(--ink);padding:8px 4px 0;font-size:.85rem;color:var(--muted);text-align:center}
+@media (max-width:480px){.floor{grid-template-columns:66px 1fr}.car{left:4px;width:58px}.car .pu svg{width:26px;height:32.5px}.car .ck svg{width:22px;height:22px}.lvl{padding:12px 10px}}
+
+/* brief */
+.brief{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--pencil);border-radius:6px;padding:18px 18px 20px;margin-top:8px}
+.brief h2{margin:0 0 4px;font-size:1.3rem}
+.brief .en{color:var(--muted);margin:0 0 12px}
+.brief p{margin:0 0 12px;max-width:62ch}
+.chip{font-family:var(--mono);font-size:.75rem;border:1px solid var(--line);border-radius:4px;padding:0 5px;color:var(--muted)}
+.brief .sx{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.brief .sx .chip{font-size:.9rem;padding:2px 8px;color:var(--ink);border-color:var(--pencil);background:color-mix(in srgb,var(--pencil) 18%,transparent)}
+.primary{background:var(--ink);color:var(--paper);border:0;border-radius:8px;padding:11px 20px;font-weight:600;font-size:1rem}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:8px;padding:10px 16px;font-size:.95rem}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+
+.kk{font-family:var(--mono);font-size:.8em;border:1px solid currentColor;border-radius:4px;padding:0 6px;margin:0 2px;opacity:.9}
+.card.warm{border-style:dashed;border-color:var(--pencil)}
+.go{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;font-size:clamp(2.5rem,12vw,5rem);font-weight:700;color:var(--ink);animation:gopop .9s forwards}
+.go span{background:var(--pencil);color:#16233B;padding:0 .4em;border-radius:8px}
+@keyframes gopop{0%{opacity:0;transform:scale(.7)}25%{opacity:1;transform:scale(1)}75%{opacity:1}100%{opacity:0}}
+
+/* sentence mode */
+.word.sentence{font-size:clamp(1.05rem,3.8vw,1.5rem);font-weight:400;letter-spacing:0;text-align:left;line-height:1.95;margin:10px 0 8px}
+.word.sentence .wd{display:inline;white-space:nowrap;opacity:1;min-width:0}
+.word.sentence .ch{min-width:0;opacity:.75}
+.word.sentence .ch.sp{min-width:.6em}
+.word.sentence .ch.bt{font-weight:700;color:var(--ink);opacity:1;box-shadow:inset 0 -.12em 0 color-mix(in srgb,var(--pencil) 60%,transparent)}
+.word.sentence .ch.done{opacity:1;color:var(--good)}
+.word.sentence .ch.cur{opacity:1;color:var(--ink);background:color-mix(in srgb,var(--pencil) 28%,transparent);border-radius:2px}
+.word.sentence.complete .ch{opacity:1;color:var(--good)}
+.gloss{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:flex-start;text-align:left;font-size:.9rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+.gloss b{font-family:var(--mono);color:var(--ink)}
+.gloss em{font-style:normal;font-size:.75rem;border:1px solid var(--line);border-radius:4px;padding:0 4px;margin:0 3px}
+
+/* hand guide */
+.guide{margin:4px 0 18px;border-top:1px solid var(--line);padding-top:12px}
+.guide summary{cursor:pointer;font-weight:600;font-size:1.02rem;list-style:none;display:flex;align-items:center;gap:8px}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:"";width:0;height:0;border:6px solid transparent;border-left:8px solid var(--ink);transition:transform .15s;transform-origin:25% 50%}
+.guide[open] summary::before{transform:rotate(90deg)}
+.guide .gbody{margin-top:14px}
+.gkb .key{flex-direction:column;line-height:1.1;gap:1px}
+.gkb .key small{font-family:var(--sans);font-size:.6rem;font-weight:500;opacity:.85}
+.gkb .key.hk{background:var(--fc);color:#101826;border-color:var(--fc)}
+.gkb .key.bump{outline:2px dashed var(--ink);outline-offset:2px}
+.gkb .key.dim{opacity:.25}
+.gkb .key.press{transform:translateY(2px);box-shadow:0 0 0 3px var(--pencil)}
+.gcap{text-align:center;font-size:.9rem;color:var(--muted);min-height:1.5em;margin:10px 0 0}
+.fchips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0 4px}
+.fchips button{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:3px 10px 3px 6px;font-size:.8rem}
+.fchips button i{width:12px;height:12px;border-radius:50%;background:var(--fc)}
+.fchips button[aria-pressed="true"]{border-color:var(--ink);font-weight:600}
+.steps{margin:16px 0 8px;padding-left:1.4em;max-width:62ch}
+.steps li{margin-bottom:6px}
+.steps li::marker{font-family:var(--mono);font-weight:600}
+.tips{font-size:.9rem;color:var(--muted);margin:0;max-width:62ch}
+
+/* play */
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:.9rem}
+.bar .lvname{font-weight:600}
+.stats{margin-left:auto;display:flex;gap:14px;color:var(--muted)}
+.stats b{font-family:var(--mono);color:var(--ink);font-weight:600}
+.stats b.low{color:var(--bad)}
+.segs{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.segs .lbl{font-size:.85rem;color:var(--muted);margin-right:6px}
+.progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:12px}
+.progress i{display:block;height:100%;background:var(--pencil);width:0;transition:width .3s}
+
+.pgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.wlog{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.88rem;min-width:0}
+.wlh{color:var(--muted);font-size:.8rem;border-bottom:1px dashed var(--line);padding-bottom:6px;margin-bottom:6px}
+.wlh b{color:var(--ink)}
+.wlog ul{list-style:none;margin:0;padding:0;max-height:150px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.wlog li button{all:unset;box-sizing:border-box;display:block;width:100%;padding:4px 6px;border-radius:6px;cursor:pointer;line-height:1.35}
+.wlog li button:hover{background:var(--bg)}
+.wlog li button:focus-visible{outline:2px solid var(--pencil)}
+.wlog li b{font-family:var(--mono);font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.wlog li em{font-style:normal;font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 3px;margin-left:4px}
+.wlog li span{display:block;color:var(--muted);font-size:.82rem}
+.wlog li.new button{animation:wlin .5s ease}
+@keyframes wlin{from{background:var(--pencil);transform:translateX(6px)}to{transform:none}}
+.wle{margin:0;color:var(--muted);font-size:.8rem}
+.app.wide{max-width:1000px}
+@media (min-width:900px){
+  .pgrid{grid-template-columns:minmax(0,1fr) 220px;align-items:start}
+  .wlog ul{max-height:300px}
+}
+.card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 16px 18px;text-align:center;cursor:text}
+.meta{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.pos{font-size:.78rem;border-radius:4px;padding:1px 7px;background:var(--ink);color:var(--paper);font-weight:600}
+.th{font-size:1.05rem;font-weight:500}
+.word{font-family:var(--mono);font-size:clamp(1.7rem,7.5vw,2.8rem);font-weight:600;letter-spacing:.04em;line-height:1.4;margin:8px 0 6px;overflow-wrap:anywhere;min-height:1.4em}
+.word span{display:inline-block;min-width:.62em;position:relative;color:var(--muted);opacity:.55;transition:color .1s}
+.word span.done{color:var(--good);opacity:1}
+.word span.cur{color:var(--ink);opacity:1}
+.word span.cur::after{content:"";position:absolute;left:8%;right:8%;bottom:.05em;height:.12em;background:var(--pencil);border-radius:2px;animation:blink 1s steps(2) infinite}
+.word span.sfx{box-shadow:inset 0 -.14em 0 color-mix(in srgb,var(--pencil) 55%,transparent)}
+.word span.sp{min-width:.5em}
+.word span.err{color:var(--bad)!important;animation:shake .22s}
+.word span.hintd{color:var(--pencil-ink)!important}
+.word.complete span{color:var(--good);opacity:1}
+@keyframes blink{50%{opacity:0}}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.ex{color:var(--muted);font-size:.95rem;min-height:1.5em;margin:0}
+.ex b{color:var(--ink);background:color-mix(in srgb,var(--pencil) 35%,transparent);padding:0 3px;border-radius:3px}
+.chain{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:.8rem}
+.chain span{border:1px solid var(--line);border-radius:5px;padding:2px 7px;color:var(--muted)}
+.chain span.on{border-color:var(--pencil);color:var(--ink);font-weight:600}
+.chain span.ok{color:var(--good)}
+.tapover{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.85rem;font-weight:500;color:var(--ink);background:color-mix(in srgb,var(--pencil) 30%,transparent);border:1px solid var(--pencil);border-radius:14px;padding:2px 12px}
+.stage{display:flex;justify-content:space-between;align-items:flex-end;height:74px;margin:10px 4px -4px;border-bottom:3px solid var(--line);padding:0 10px}
+.pix svg{display:block;shape-rendering:crispEdges}
+.buddy{position:relative;display:flex;align-items:flex-end;gap:8px}
+#intern{animation:bob 1.2s steps(2) infinite}
+#intern.jump{animation:jump .45s ease-out}
+.catw:not(.sleep) #cat{animation:jig 1.6s ease-in-out infinite}
+@keyframes jig{50%{transform:scale(1.04,.95)}}
+#intern.oops{animation:shake .3s linear}
+@keyframes bob{50%{transform:translateY(-2px)}}
+@keyframes jump{40%{transform:translateY(-14px)}}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.bubble{position:relative;align-self:flex-start;margin-top:2px;background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:2px 9px;font-size:.88rem;font-weight:600;white-space:nowrap;animation:pop .2s ease-out}
+.bubble::before{content:"";position:absolute;left:-7px;bottom:7px;border:5px solid transparent;border-right-color:var(--ink);border-left:0}
+.bubble.good{background:var(--pencil);color:#16233B;border-color:#16233B}
+.bubble.good::before{border-right-color:#16233B}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.catw{position:relative}
+#cat{transform-origin:50% 100%}
+.catw #cat.wake{animation:wob .5s ease-out}
+@keyframes wob{25%{transform:scale(1.15,.8)}55%{transform:scale(.9,1.12) translateY(-4px)}80%{transform:scale(1.04,.96)}}
+.zzz{position:absolute;right:2px;top:-22px;font-family:var(--mono);font-weight:700;color:var(--muted);font-size:.8rem;opacity:0;transition:opacity .4s}
+.zzz i,.zzz b{font-style:normal;font-weight:700;position:relative}
+.zzz i{top:-5px;font-size:.95rem}.zzz b{top:-11px;font-size:1.1rem}
+.catw.sleep .zzz{opacity:1;animation:zz 2s ease-in-out infinite}
+@keyframes zz{50%{transform:translateY(-3px)}}
+.resmas{display:flex;justify-content:center;align-items:flex-end;gap:14px;margin:4px 0 2px}
+.resmas #rIntern.cheer{animation:jump .7s ease-out infinite}
+@media (prefers-reduced-motion:reduce){#intern,#intern.jump,#cat.wake,.resmas #rIntern.cheer,.catw #cat,.catw.sleep .zzz{animation:none}}
+.fhint{text-align:center;margin:12px 0 8px;font-size:.95rem;min-height:1.6em}
+.fhint .dot{display:inline-block;width:.8em;height:.8em;border-radius:50%;vertical-align:-.05em;margin-right:6px}
+
+/* keyboard */
+.kb{user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;gap:5px;margin:0 auto;max-width:620px}
+.row{display:flex;gap:5px}
+.row:nth-child(2){padding-left:3%}
+.row:nth-child(3){padding-left:8%}
+.key{flex:1;min-width:0;aspect-ratio:1/1.05;max-height:52px;border-radius:6px;border:1px solid color-mix(in srgb,var(--fc) 45%,var(--line));
+  background:color-mix(in srgb,var(--fc) 14%,var(--paper));font-family:var(--mono);font-size:clamp(.8rem,3.4vw,1.05rem);font-weight:600;
+  display:flex;align-items:center;justify-content:center;position:relative;padding:0;touch-action:manipulation}
+.key.home::after{content:"";position:absolute;bottom:5px;width:30%;height:2px;border-radius:1px;background:var(--ink);opacity:.5}
+.key.target{background:var(--fc);color:#101826;border-color:var(--fc);transform:translateY(-2px);box-shadow:0 3px 0 color-mix(in srgb,var(--fc) 55%,#000)}
+.key.wrong{background:var(--bad);color:#fff;border-color:var(--bad)}
+.key.space{flex:0 0 46%;margin:0 auto;aspect-ratio:auto;height:40px;font-size:.8rem;font-family:var(--sans);font-weight:500}
+
+/* hands */
+.hands{display:flex;justify-content:center;gap:28px;margin-top:16px}
+.hand{display:flex;align-items:flex-end;gap:5px;height:66px}
+.fg{width:16px;border-radius:8px 8px 5px 5px;background:color-mix(in srgb,var(--fc) 22%,var(--paper));border:1px solid color-mix(in srgb,var(--fc) 50%,var(--line));transition:transform .15s,background .15s}
+.fg.on{background:var(--fc);transform:translateY(-8px)}
+.fg.p{height:36px}.fg.r{height:50px}.fg.m{height:58px}.fg.i{height:52px}.fg.t{height:26px;width:20px;margin:0 3px}
+
+/* results */
+.res h2{margin:6px 0 2px;font-size:1.5rem}
+.res .sub{color:var(--muted);margin:0 0 18px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:18px}
+.nums div{padding:12px 6px}
+.nums div+div{border-left:1px solid var(--line)}
+.nums strong{display:block;font-family:var(--mono);font-size:1.8rem;line-height:1.2}
+.nums span{font-size:.85rem;color:var(--muted)}
+.res h3{font-size:1rem;margin:0 0 8px}
+.weak{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;padding:0;list-style:none}
+.weak li{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 10px 5px 5px;font-size:.85rem}
+.weak kbd{font-family:var(--mono);font-weight:600;background:var(--fc);color:#101826;border-radius:5px;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+.missed{margin:0 0 20px;padding-left:1.1em;color:var(--muted)}
+.missed b{color:var(--ink);font-family:var(--mono)}
+.unlock{background:color-mix(in srgb,var(--pencil) 22%,var(--paper));border-left:5px solid var(--pencil);border-radius:4px;padding:8px 12px;margin:-6px 0 16px}
+.unlock b{margin:0 4px}
+.newbest{display:inline-block;background:var(--pencil);color:#16233B;font-weight:600;font-size:.8rem;border-radius:4px;padding:1px 8px;margin-left:8px;vertical-align:.2em}
+
+#trap{position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;border:0;padding:0;font-size:16px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:420px){.hands{gap:14px}.fg{width:13px}.stats{gap:10px}}
+</style>
+</head>
+<body>
+<input id="trap" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="ช่องพิมพ์">
+<div class="app">
+  <header class="top">
+    <div class="brand"><h1>พิมพ์ศัพท์ <b>TOEIC</b></h1><span>ฝึกนิ้ว ฝึกสะกด</span></div>
+    <div class="hdrbtns"><button class="iconbtn" id="themeBtn" title="เปลี่ยนโหมดความสว่าง">ธีม: อัตโนมัติ</button>
+    <button class="iconbtn" id="switchBtn" title="เปลี่ยนเสียงคีย์บอร์ด">เสียงคีย์: นุ่ม</button>
+    <button class="iconbtn" id="soundBtn" aria-pressed="true">เสียง: เปิด</button></div>
+  </header>
+
+  <!-- HOME -->
+  <section id="home">
+    <p class="intro">ชั้น 1–6 ฝึกตามหลักภาษา ชั้น 7–20 ฝึกศัพท์ตามหัวข้อธุรกิจ ยิ่งขึ้นสูงยิ่งหรู ส่วนดาดฟ้ามีคำใหม่ทุกสัปดาห์ โหมดคำศัพท์มีด่านละ 10 คำ โหมดประโยคมีด่านละ 5 ประโยค ส่วนท้ายคำที่บอกชนิดคำจะขีดเส้นสีเหลืองไว้ให้สังเกต</p>
+    <div class="segs">
+      <div class="seg" role="group" aria-label="โหมด" id="modeSeg">
+        <button data-mode="see" aria-pressed="true">ฝึกนิ้ว</button>
+        <button data-mode="spell" aria-pressed="false">ทดสอบสะกด</button>
+        <button data-mode="sent" aria-pressed="false">พิมพ์ประโยค</button>
+      </div>
+      <div><span class="lbl">เวลา</span><div class="seg" role="group" aria-label="จำกัดเวลา" id="limitSeg">
+        <button data-limit="0" aria-pressed="true" id="lim0">ครบชุด</button>
+        <button data-limit="60" aria-pressed="false">60 วิ</button>
+        <button data-limit="120" aria-pressed="false">2 นาที</button>
+      </div></div>
+    </div>
+    <p class="modehint" id="modeHint"></p>
+    <div class="tower-wrap">
+      <div class="roof"><span>อาคาร <b>TOEIC</b></span></div>
+      <ol class="tower" id="levels" aria-label="ชั้นของอาคาร จากชั้นบนสุดลงมา"></ol>
+      <p class="ground">ล็อบบี้หินอ่อน · แม่นยำ 75% ขึ้นไปก็ขึ้นลิฟต์ไปชั้นถัดไปได้ ไม่ต้องรีบ</p>
+    </div>
+  </section>
+
+  <!-- BRIEF -->
+  <section id="brief" class="hidden">
+    <div class="brief">
+      <div class="bart" id="bArt" aria-hidden="true"></div>
+      <h2 id="bTitle"></h2>
+      <p class="en" id="bEn"></p>
+      <p id="bRule"></p>
+      <div class="sx" id="bSx"></div>
+      <details class="guide" id="guide">
+        <summary>วิธีวางมือบนแป้นพิมพ์</summary>
+        <div class="gbody">
+          <div class="kb gkb" id="gkb"></div>
+          <p class="gcap" id="gcap">ลองกดแป้นดู ปุ่มที่กดจะขึ้นบนภาพพร้อมบอกนิ้วที่ใช้ วางมือเสร็จแล้วกด space เพื่อเริ่ม</p>
+          <div class="fchips" id="fchips"></div>
+          <div class="hands" id="ghands"></div>
+          <ol class="steps">
+            <li>คลำหาปุ่ม <b>F</b> และ <b>J</b> ซึ่งมีขีดนูนเล็ก ๆ แล้ววางนิ้วชี้ซ้ายบน F นิ้วชี้ขวาบน J</li>
+            <li>วางนิ้วที่เหลือเรียงบนแถวกลาง มือซ้าย <b>A S D</b> (ก้อย นาง กลาง) มือขวา <b>K L ;</b> (กลาง นาง ก้อย)</li>
+            <li>พักนิ้วโป้งทั้งสองข้างไว้เหนือปุ่ม <b>space</b></li>
+            <li>นิ้วชี้ดูแลปุ่ม 2 แถวตั้ง ซ้ายคือ R F V T G B ขวาคือ Y H N U J M นิ้วอื่นดูแลแถวตั้งของตัวเอง แตะชื่อนิ้วด้านบนเพื่อดูว่านิ้วนั้นรับผิดชอบปุ่มไหน</li>
+            <li>กดเสร็จแล้วให้นิ้วกลับมาที่แถวกลางทุกครั้ง</li>
+          </ol>
+          <p class="tips">งอนิ้วเล็กน้อยเหมือนกำลูกบอล ข้อมือลอยไว้ไม่กดลงบนโต๊ะ และพยายามมองจอแทนการก้มดูแป้น</p>
+        </div>
+      </details>
+      <div class="actions">
+        <button class="primary" id="startBtn">วางมือแล้ว กด <kbd class="kk">space</kbd> เพื่อเริ่ม</button>
+        <button class="ghost" data-go="home">เลือกด่านอื่น</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="play" class="hidden">
+    <div class="bar">
+      <button class="iconbtn" data-go="home" aria-label="กลับเมนู">✕</button>
+      <button class="iconbtn hidden" id="skipWarm">ข้ามวอร์ม</button>
+      <span class="lvname" id="pLv"></span>
+      <span id="pCount" style="color:var(--muted)"></span>
+      <div class="stats"><span id="sTimeLbl">เวลา</span><b id="sTime" style="margin-left:-8px">0:00</b><span>WPM <b id="sWpm">0</b></span><span>แม่นยำ <b id="sAcc">100%</b></span></div>
+    </div>
+    <div class="progress"><i id="pBar"></i></div>
+    <div class="pgrid">
+    <div class="card" id="card">
+      <div class="meta"><span class="pos" id="wPos"></span><span class="th" id="wTh"></span></div>
+      <div class="word" id="word" aria-live="polite"></div>
+      <p class="ex" id="wEx"></p>
+      <div class="chain hidden" id="chain"></div>
+      <div class="tapover hidden" id="tapover">คลิกที่การ์ดหรือกดแป้นใดก็ได้เพื่อพิมพ์ต่อ</div>
+    </div>
+    <aside class="wlog hidden" id="wlog" aria-label="คำที่พิมพ์แล้ว">
+      <div class="wlh">พิมพ์แล้ว <b id="wlogN">0</b> คำ</div>
+      <ul id="wlogList"></ul>
+      <p class="wle" id="wlogEmpty">คำที่พิมพ์ผ่านจะมาอยู่ตรงนี้</p>
+    </aside>
+    </div>
+    <div class="stage" id="stage" aria-hidden="true">
+      <div class="buddy"><div class="pix" id="intern"></div><div class="bubble hidden" id="bubble"></div></div>
+      <div class="catw"><span class="zzz" id="zzz">z<i>z</i><b>z</b></span><div class="pix" id="cat"></div></div>
+    </div>
+    <div class="fhint" id="fhint"></div>
+    <div class="kb" id="kb"></div>
+    <div class="hands" id="hands"></div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="hidden res">
+    <div class="resmas" aria-hidden="true"><div class="pix" id="rIntern"></div><div class="pix" id="rCat"></div></div>
+    <h2 id="rTitle"></h2>
+    <p class="sub" id="rSub"></p>
+    <p class="unlock hidden" id="rUnlock"></p>
+    <div class="nums">
+      <div><strong id="rWpm"></strong><span>คำต่อนาที</span></div>
+      <div><strong id="rAcc"></strong><span>ความแม่นยำ</span></div>
+      <div><strong id="rTime"></strong><span>เวลาที่ใช้</span></div>
+    </div>
+    <div id="weakWrap"><h3>ปุ่มที่กดพลาดบ่อย</h3><ul class="weak" id="rWeak"></ul></div>
+    <div id="missWrap"><h3>คำที่ควรทบทวน</h3><ul class="missed" id="rMiss"></ul></div>
+    <div class="actions">
+      <button class="primary" id="againBtn">เล่นด่านนี้อีกครั้ง</button>
+      <button class="ghost" id="nextBtn">ไปด่านถัดไป</button>
+      <button class="ghost" data-go="home">กลับเมนู</button>
+    </div>
+  </section>
+  <footer class="pbrand" id="brand">
+    <a id="brandLink" href="#" target="_blank" rel="noopener">
+      <span class="blogo" id="brandLogo"></span>
+      <span class="btxt"><small id="brandTag"></small><b id="brandCta"></b></span>
+    </a>
+  </footer>
+  <p class="pfoot"><a id="fbLink" href="#" target="_blank" rel="noopener" hidden>💬 แจ้งปัญหา / เสนอไอเดีย</a><span id="appVer"></span></p>
+</div>
+
+<script>
+/* ===== ตั้งค่าแบรนด์ — แก้ตรงนี้ที่เดียว ===== */
+const BRAND={
+  name:'PULULU',                            // ชื่อที่โชว์ในกล่องโลโก้ (ถ้าไม่มีรูป)
+  logo:'',                                  // ไฟล์/ลิงก์รูปโลโก้ เช่น 'logo.png' (เว้นว่าง = ใช้ตัวหนังสือ)
+  url:'https://www.tiktok.com/@p.lulu23',   // ลิงก์ร้านหรือช่อง
+  tag:'เกมนี้ทำโดย',                         // ข้อความเล็กบรรทัดบน
+  cta:'ติดตาม PULULU บน TikTok',             // ข้อความหลัก
+  feedback:'https://github.com/poomchief/toeic-typing/issues/new/choose', // ลิงก์รับฟีดแบ็ก เช่น 'https://github.com/ชื่อผู้ใช้/toeic-typing/issues/new/choose' หรือลิงก์ Google Form (เว้นว่าง = ซ่อนปุ่ม)
+};
+const APP_VERSION='1.0.0';                  // เปลี่ยนเลขทุกครั้งที่อัปเดต ให้ตรงกับ CHANGELOG.md
+(function(){
+  const g=id=>document.getElementById(id);
+  g('appVer').textContent='v'+APP_VERSION;
+  if(BRAND.feedback){g('fbLink').href=BRAND.feedback;g('fbLink').hidden=false;}
+  if(!BRAND.url){g('brand').hidden=true;return;}
+  g('brandLink').href=BRAND.url;g('brandTag').textContent=BRAND.tag;g('brandCta').textContent=BRAND.cta;
+  const box=g('brandLogo');
+  if(BRAND.logo){const im=new Image();im.alt=BRAND.name;im.src=BRAND.logo;im.onerror=()=>{box.classList.remove('hasimg');box.textContent=BRAND.name;};box.classList.add('hasimg');box.appendChild(im);}
+  else box.textContent=BRAND.name;
+})();
+/* ---------- data ---------- */
+const POS={n:'n. คำนาม',v:'v. คำกริยา',adj:'adj. คุณศัพท์',adv:'adv. กริยาวิเศษณ์',phr:'วลี',sent:'ประโยค'};
+const PSHORT={n:'n.',v:'v.',adj:'adj.',adv:'adv.',phr:'วลี'};
+const SENTS={
+ noun:['Please check the **invoice** carefully and send the **receipt** to the finance team before the end of the week.','Our **revenue** grew this quarter, so the manager decided to increase the marketing **budget** for next year.','Every **applicant** must meet the **deadline**, or the hiring team will not review the application.','The **shipment** was delayed, so we updated the **inventory** and informed each customer by email.','Your travel **itinerary** is attached, and a **colleague** will meet you at the airport on Monday morning.','The first item on the **agenda** is the new **warranty** policy for all electronic **merchandise**.','Customers who cancel their **subscription** early can ask for a full **refund** within two weeks.','The **supervisor** said that **attendance** at the safety training is required for every new employee.'],
+ verb:['We had to **postpone** the product launch because the team needed more time to **finalize** the design.','The company will **reimburse** your hotel costs if you **submit** the receipts by Friday afternoon.','Both sides agreed to **negotiate** a new contract and **implement** the changes before the end of the year.','The hotel plans to **renovate** its lobby so that it can **accommodate** larger groups of guests.','Please **confirm** your seat and **attend** the orientation session in the main conference room.','The firm hopes to **recruit** more engineers and **allocate** extra funds to research and development.','Managers **evaluate** each team every quarter and **distribute** the results to all department heads.','Before you **purchase** new equipment, please **verify** the price with the finance department.'],
+ adj:['Attendance at the monthly meeting is **mandatory**, so please be **punctual** and bring your notes.','We are looking for a **reliable** supplier that offers **affordable** prices and **durable** products.','Only full time employees are **eligible** for the bonus, according to the **previous** agreement.','Hotel guests receive **complimentary** breakfast and stay in **spacious** rooms with a view of the river.','This is only a **tentative** schedule, and all details in the report remain **confidential** until Friday.','The new software is more **efficient**, and the launch was **successful** thanks to our **extensive** testing.','We hired **temporary** staff because the busy season started much earlier than expected this year.'],
+ adv:['The flight takes **approximately** two hours, so please arrive at the airport **promptly** in the morning.','The store is **temporarily** closed because the building is **currently** under renovation.','Sales increased **significantly** last year, and our team **consistently** met its monthly targets.','She **previously** worked in marketing and was **recently** promoted to sales manager.','Please back up your files **regularly** and reply **immediately** if you notice any problems.','Prices rose **unexpectedly** in June, so we changed our plans and adjusted the budget **accordingly**.'],
+ fam:['The **competition** in this market is strong, so we must **compete** by offering **competitive** prices.','Our **production** team works **productively** because the new machines are fast and easy to use.','Her **success** shows that anyone can **succeed** with a **successful** plan and a lot of hard work.','The manager acted **decisively** and made a quick **decision** about the new marketing budget.','Customers **rely** on us because our service is **reliable** and we deliver **reliably** every day.','The **expansion** of our main office will help us **expand** into new markets next year.','Please **inform** the staff that the new guide is **informative** and full of useful **information**.'],
+ phr:['Ms. Lee is **in charge of** the project, and she will **set up** the new system next week.','I am writing **on behalf of** the manager to ask you to **fill out** the attached form.','The conference will **take place** in Bangkok, so please book your hotel room **in advance**.','This item is **out of stock** **due to** high demand, but we expect more next week.','We **look forward to** meeting you, and we hope you will **sign up for** the workshop.','All staff must **comply with** the safety rules, and each manager is **responsible for** training.','**As of** July first, the new delivery rate will apply to every customer in the city.']
+};
+const LEVELS=[
+ {id:'noun',dept:'ฝ่ายบัญชี',ex:['invoice','budget','receipt'],name:'คำนาม',en:'Nouns',pos:'n',sx:['-tion','-ment','-ance','-er / -or','-ant','-ity'],
+  rule:'คำนามมักลงท้ายด้วย -tion, -ment, -ance/-ence, -er/-or, -ant และมักอยู่หลัง a / an / the หรือหลังคำคุณศัพท์',
+  words:[['invoice','ใบแจ้งหนี้','Please pay the ___ within 30 days.'],['budget','งบประมาณ','The project is over ___.'],['deadline','กำหนดส่ง','We must meet the ___ on Friday.'],['revenue','รายได้','Annual ___ rose by 12 percent.'],['applicant','ผู้สมัคร','Each ___ must send a resume.','ant'],['itinerary','กำหนดการเดินทาง','Your travel ___ is attached.'],['warranty','การรับประกัน','The printer has a two-year ___.'],['inventory','สินค้าคงคลัง','We check the ___ every month.'],['receipt','ใบเสร็จ','Keep your ___ for returns.'],['shipment','การจัดส่งสินค้า','The ___ will arrive on Monday.','ment'],['colleague','เพื่อนร่วมงาน','I asked a ___ for help.'],['agenda','วาระการประชุม','The first item on the ___ is sales.'],['refund','การคืนเงิน','Customers can request a full ___.'],['subscription','การสมัครสมาชิก','Your ___ expires next month.','tion'],['attendance','การเข้าร่วม','___ at the seminar is required.','ance'],['supervisor','หัวหน้างาน','Report problems to your ___.','or'],['merchandise','สินค้า','All ___ is on sale this week.'],['facility','สิ่งอำนวยความสะดวก','The gym is a popular ___.','ity']]},
+ {id:'verb',dept:'ฝ่ายบุคคล',ex:['recruit','evaluate','attend'],name:'คำกริยา',en:'Verbs',pos:'v',sx:['-ate','-ize','-ify','-en'],
+  rule:'คำกริยามักลงท้ายด้วย -ate, -ize, -ify, -en และมักตามหลัง to, will, can, must หรือตามหลังประธาน',
+  words:[['postpone','เลื่อนออกไป','We need to ___ the meeting.'],['reimburse','ชดใช้เงินคืน','The company will ___ your travel costs.'],['submit','ส่ง (งาน/เอกสาร)','Please ___ the report by noon.'],['negotiate','เจรจาต่อรอง','They will ___ a new contract.','ate'],['renovate','ปรับปรุงซ่อมแซม','The hotel plans to ___ its lobby.','ate'],['attend','เข้าร่วม','All staff must ___ the training.'],['implement','นำไปปฏิบัติ','We will ___ the new policy in May.'],['recruit','รับสมัครคนเข้าทำงาน','The firm hopes to ___ ten engineers.'],['confirm','ยืนยัน','Please ___ your reservation.'],['purchase','ซื้อ','You can ___ tickets online.'],['distribute','แจกจ่าย','Please ___ these handouts.'],['evaluate','ประเมิน','Managers ___ staff every year.','ate'],['accommodate','รองรับ','The room can ___ 50 guests.','ate'],['allocate','จัดสรร','We need to ___ more funds.','ate'],['finalize','ทำให้เสร็จสมบูรณ์','Let us ___ the details today.','ize'],['verify','ตรวจสอบยืนยัน','Please ___ your email address.','ify'],['strengthen','ทำให้แข็งแกร่ง','We want to ___ our brand.','en']]},
+ {id:'adj',dept:'ฝ่ายจัดซื้อ',ex:['reliable','affordable','durable'],name:'คุณศัพท์',en:'Adjectives',pos:'adj',sx:['-able / -ible','-ive','-ful','-ous','-al','-ary / -ory'],
+  rule:'คุณศัพท์มักลงท้ายด้วย -able/-ible, -ive, -ful, -ous, -al, -ary/-ory วางหน้าคำนาม หรือตามหลัง be / become',
+  words:[['mandatory','ที่บังคับ','Attendance is ___ for all staff.','ory'],['reliable','น่าเชื่อถือ','We need a ___ supplier.','able'],['eligible','มีสิทธิ์','Full-time staff are ___ for the bonus.','ible'],['affordable','ราคาย่อมเยา','The hotel offers ___ rates.','able'],['complimentary','ฟรี (ให้เปล่า)','Guests receive ___ breakfast.','ary'],['tentative','ยังไม่แน่นอน','This is only a ___ schedule.','ive'],['confidential','เป็นความลับ','Please keep this file ___.','al'],['spacious','กว้างขวาง','The new office is bright and ___.','ous'],['punctual','ตรงต่อเวลา','Please be ___ for the interview.','al'],['efficient','มีประสิทธิภาพ','The new system is more ___.'],['durable','ทนทาน','These bags are light and ___.','able'],['previous','ก่อนหน้า','Refer to the ___ report.','ous'],['successful','ประสบความสำเร็จ','The launch was very ___.','ful'],['extensive','กว้างขวาง ครอบคลุม','She has ___ experience in sales.','ive'],['temporary','ชั่วคราว','We hired ___ workers for July.','ary']]},
+ {id:'adv',dept:'ฝ่ายขาย',ex:['significantly','promptly','currently'],name:'กริยาวิเศษณ์',en:'Adverbs',pos:'adv',sx:['-ly'],
+  rule:'กริยาวิเศษณ์ส่วนใหญ่คือคุณศัพท์ + -ly ใช้ขยายกริยา ขยายคุณศัพท์ หรือขยายทั้งประโยค เช่น be ___ + V3 หรือ ___ + adj.',
+  words:[['approximately','ประมาณ','The flight takes ___ two hours.'],['immediately','ทันที','Please reply ___.'],['previously','ก่อนหน้านี้','She ___ worked in sales.'],['temporarily','ชั่วคราว','The store is ___ closed.'],['significantly','อย่างมาก','Sales increased ___ last year.'],['promptly','ตรงเวลาเป๊ะ / ทันที','The meeting started ___ at nine.'],['currently','ในปัจจุบัน','We are ___ hiring new staff.'],['regularly','เป็นประจำ','Back up your files ___.'],['recently','เมื่อเร็ว ๆ นี้','The office was ___ renovated.'],['unexpectedly','โดยไม่คาดคิด','Prices rose ___ in June.'],['accordingly','ตามนั้น','Plans changed, so we adjusted ___.'],['consistently','อย่างสม่ำเสมอ','Our team ___ meets its targets.']].map(w=>[w[0],w[1],w[2],'ly'])},
+ {id:'fam',dept:'ฝ่ายวางแผน',ex:['compete','competitive','competitively'],name:'ตระกูลคำ',en:'Word families',pos:'fam',sx:['n.','v.','adj.','adv.'],
+  rule:'TOEIC Part 5 ชอบให้เลือกรูปคำที่ถูก ดูจากตำแหน่ง: หลัง the / a ใช้ n. · หลัง to / will ใช้ v. · หน้าคำนามหรือหลัง be ใช้ adj. · ขยายกริยาใช้ adv. ด่านนี้พิมพ์ครบทั้งตระกูลทีละรูป',
+  fams:[
+   [['competition','n','การแข่งขัน','tion'],['compete','v','แข่งขัน'],['competitive','adj','ที่แข่งขันได้','ive'],['competitively','adv','อย่างแข่งขันได้','ly']],
+   [['production','n','การผลิต','tion'],['produce','v','ผลิต'],['productive','adj','ที่ได้ผลดี','ive'],['productively','adv','อย่างได้ผล','ly']],
+   [['success','n','ความสำเร็จ'],['succeed','v','ประสบความสำเร็จ'],['successful','adj','ที่สำเร็จ','ful'],['successfully','adv','อย่างสำเร็จ','ly']],
+   [['decision','n','การตัดสินใจ','sion'],['decide','v','ตัดสินใจ'],['decisive','adj','เด็ดขาด','ive'],['decisively','adv','อย่างเด็ดขาด','ly']],
+   [['reliance','n','การพึ่งพา','ance'],['rely','v','พึ่งพา'],['reliable','adj','น่าเชื่อถือ','able'],['reliably','adv','อย่างน่าเชื่อถือ','ly']],
+   [['expansion','n','การขยาย','sion'],['expand','v','ขยาย'],['expansive','adj','กว้างขวาง','ive'],['expansively','adv','อย่างกว้างขวาง','ly']],
+   [['information','n','ข้อมูล','tion'],['inform','v','แจ้งให้ทราบ'],['informative','adj','ให้ความรู้','ive'],['informatively','adv','อย่างให้ความรู้','ly']]
+  ]},
+ {id:'phr',dept:'ห้องผู้บริหาร',ex:['in charge of','on behalf of'],name:'วลีและบุพบท',en:'Phrases & prepositions',pos:'phr',sx:['in','on','of','for','with','to'],
+  rule:'วลีที่มากับบุพบทต้องจำเป็นก้อน เพราะ TOEIC มักเว้นบุพบทไว้ให้เติม ด่านนี้ได้ฝึกกดเว้นวรรคด้วยนิ้วโป้งด้วย',
+  words:[['in charge of','รับผิดชอบดูแล','Ms. Lee is ___ the project.'],['on behalf of','ในนามของ','I am writing ___ the manager.'],['in advance','ล่วงหน้า','Please book ___.'],['out of stock','สินค้าหมด','This item is currently ___.'],['take place','จัดขึ้น / เกิดขึ้น','The conference will ___ in Bangkok.'],['fill out','กรอก (แบบฟอร์ม)','Please ___ this form.'],['look forward to','ตั้งตารอ','We ___ meeting you.'],['comply with','ปฏิบัติตาม','All staff must ___ safety rules.'],['due to','เนื่องจาก','The flight was delayed ___ bad weather.'],['sign up for','ลงทะเบียน','You can ___ the workshop online.'],['set up','ติดตั้ง / จัดตั้ง','IT will ___ your computer.'],['as of','ตั้งแต่ (วันที่)','The new rate applies ___ July 1.'],['responsible for','รับผิดชอบต่อ','He is ___ training new staff.']]}
+];
+
+/* ---------- ชั้น 7–12: ศัพท์ตามหัวข้อธุรกิจ TOEIC ---------- */
+const TOPIC_LEVELS=[
+ {id:'factory',dept:'ศูนย์ควบคุมการผลิต',ex:['assembly','warehouse','defective'],name:'การผลิต',en:'Manufacturing',pos:'n',sx:['โรงงาน','คลังสินค้า','ตรวจคุณภาพ'],
+  rule:'ศัพท์โรงงานและการผลิตเจอบ่อยในบทสนทนา Part 3 และประกาศ Part 4 เช่น สายการผลิตหยุด ชิ้นส่วนขาด หรือนัดตรวจความปลอดภัย',
+  words:[['assembly','การประกอบ (สายการผลิต)','The ___ line runs all night.','','n'],['manufacture','ผลิต (ในโรงงาน)','We ___ parts for cars.','','v'],['warehouse','คลังสินค้า','The boxes are stored in the ___.','','n'],['equipment','อุปกรณ์','Please check the ___ before use.','ment','n'],['inspection','การตรวจสอบ','The safety ___ is on Monday.','tion','n'],['defective','มีตำหนิ ชำรุด','Return any ___ items.','ive','adj'],['capacity','กำลังการผลิต ความจุ','The plant is running at full ___.','ity','n'],['supplier','ผู้จัดหาวัตถุดิบ','We changed our ___ last year.','er','n'],['component','ชิ้นส่วน','Each ___ is tested twice.','ent','n'],['output','ผลผลิต','Daily ___ rose by ten percent.','','n'],['machinery','เครื่องจักร','The new ___ is very quiet.','ery','n'],['quality control','การควบคุมคุณภาพ','___ found no problems.','','n'],['operate','ควบคุม (เครื่องจักร) ดำเนินงาน','Only trained staff may ___ this machine.','ate','v'],['shortage','การขาดแคลน','A ___ of parts delayed the order.','age','n'],['automated','เป็นระบบอัตโนมัติ','The packing process is fully ___.','ed','adj']]},
+ {id:'it',dept:'ศูนย์ข้อมูล',ex:['software','database','install'],name:'ไอที',en:'Information technology',pos:'n',sx:['ระบบ','อุปกรณ์','แก้ปัญหา'],
+  rule:'ศัพท์ไอทีมักมาในอีเมลแจ้งปิดระบบ Part 7 หรือบทสนทนาเรื่องคอมพิวเตอร์เสีย Part 3 จำคู่คำ เช่น install software หรือ access the database',
+  words:[['software','ซอฟต์แวร์','Please update the ___ tonight.','','n'],['password','รหัสผ่าน','Change your ___ every month.','','n'],['install','ติดตั้ง','The technician will ___ the printer.','','v'],['upgrade','อัปเกรด ปรับรุ่น','We plan to ___ all laptops.','','v'],['database','ฐานข้อมูล','Customer names are kept in a ___.','','n'],['network','เครือข่าย','The office ___ is down.','','n'],['malfunction','การทำงานผิดปกติ','A ___ caused the delay.','tion','n'],['technician','ช่างเทคนิค','A ___ will visit at noon.','ian','n'],['backup','ข้อมูลสำรอง','Always keep a ___ of your files.','','n'],['download','ดาวน์โหลด','You can ___ the manual from our site.','','v'],['compatible','ใช้ร่วมกันได้','This cable is ___ with most phones.','ible','adj'],['troubleshoot','หาสาเหตุและแก้ปัญหา','Our team will ___ the error.','','v'],['access','การเข้าถึง','Only managers have ___ to these files.','','n'],['device','อุปกรณ์','Turn off every ___ before you leave.','','n'],['server','เซิร์ฟเวอร์','The ___ was restarted last night.','er','n']]},
+ {id:'market',dept:'สตูดิโอการตลาด',ex:['campaign','promote','survey'],name:'การตลาด',en:'Marketing',pos:'n',sx:['โฆษณา','ลูกค้า','เปิดตัวสินค้า'],
+  rule:'ศัพท์การตลาดโผล่บ่อยในโฆษณา ประกาศ และอีเมลเสนอโปรโมชั่น Part 7 สังเกตคำนามท้าย -ment -tion -er -or ที่ยังใช้ได้ในชั้นนี้',
+  words:[['advertisement','โฆษณา','The ___ appeared in the newspaper.','ment','n'],['campaign','แคมเปญ การรณรงค์','The summer ___ was a big success.','','n'],['promote','โปรโมต ส่งเสริมการขาย','We will ___ the new drink online.','','v'],['survey','แบบสำรวจ','Please complete our customer ___.','','n'],['consumer','ผู้บริโภค','___ demand is rising.','er','n'],['launch','เปิดตัว','We will ___ the product in May.','','v'],['brand','แบรนด์ ตราสินค้า','Our ___ is popular with young people.','','n'],['target','เป้าหมาย','Students are our main ___ group.','','n'],['discount','ส่วนลด','Members get a ten percent ___.','','n'],['feedback','ความคิดเห็นตอบกลับ','We value your ___.','','n'],['sponsor','ผู้สนับสนุน','The bank is the main ___ of the event.','or','n'],['demonstration','การสาธิต','The team gave a product ___.','tion','n'],['competitor','คู่แข่ง','Our main ___ lowered its prices.','or','n'],['exclusive','พิเศษเฉพาะ','___ offers are sent to members.','ive','adj'],['strategy','กลยุทธ์','We need a new marketing ___.','','n']]},
+ {id:'finance',dept:'ห้องนิรภัย',ex:['deposit','interest','audit'],name:'การเงินและธนาคาร',en:'Finance & banking',pos:'n',sx:['ธนาคาร','บัญชี','การลงทุน'],
+  rule:'ศัพท์การเงินมาในใบแจ้งยอด อีเมลจากธนาคาร และรายงานบริษัท Part 7 ระวังคำที่หน้าตาคล้ายกัน เช่น deposit กับ withdraw ที่ความหมายตรงข้ามกัน',
+  words:[['account','บัญชี','Please open a savings ___.','','n'],['deposit','เงินฝาก','Please make a ___ before noon.','','n'],['withdraw','ถอนเงิน','You can ___ cash at any branch.','','v'],['loan','เงินกู้','The bank approved our ___.','','n'],['interest','ดอกเบี้ย','The ___ rate is low this year.','','n'],['expense','ค่าใช้จ่าย','Travel ___ must be approved.','','n'],['profit','กำไร','The company made a large ___.','','n'],['investment','การลงทุน','The new factory is a big ___.','ment','n'],['balance','ยอดคงเหลือ','Check your account ___ online.','ance','n'],['transaction','ธุรกรรม','Every ___ is recorded.','tion','n'],['audit','การตรวจสอบบัญชี','The annual ___ starts next week.','','n'],['payroll','บัญชีจ่ายเงินเดือน','___ is processed on Fridays.','','n'],['shareholder','ผู้ถือหุ้น','Every ___ will receive a report.','er','n'],['financial','ทางการเงิน','The ___ report is ready.','al','adj'],['estimate','ใบประเมินราคา','Please send us a cost ___.','ate','n']]},
+ {id:'travel',dept:'เลานจ์ส่วนตัว',ex:['boarding pass','layover','luggage'],name:'การเดินทาง',en:'Travel',pos:'n',sx:['สนามบิน','ตั๋ว','ที่พัก'],
+  rule:'ศัพท์เดินทางเจอบ่อยในประกาศสนามบิน Part 4 และกำหนดการเดินทาง Part 7 คำหลายคำเป็นวลีสองคำ เช่น boarding pass หรือ round trip ต้องกดเว้นวรรคด้วยนิ้วโป้ง',
+  words:[['boarding pass','บัตรขึ้นเครื่อง','Show your ___ at the gate.','','n'],['departure','การออกเดินทาง','Our ___ was delayed by an hour.','ure','n'],['destination','จุดหมายปลายทาง','Paris is our final ___.','tion','n'],['luggage','กระเป๋าเดินทาง','Do not leave your ___ alone.','age','n'],['passenger','ผู้โดยสาร','Each ___ may bring one bag.','er','n'],['delay','ความล่าช้า','Bad weather caused a long ___.','','n'],['reservation','การจอง','I have a ___ for two nights.','tion','n'],['fare','ค่าโดยสาร','The train ___ went up this year.','','n'],['customs','ด่านศุลกากร','You must go through ___ after landing.','','n'],['layover','การแวะพักต่อเครื่อง','We have a short ___ in Tokyo.','','n'],['terminal','อาคารผู้โดยสาร','The bus stops in front of the ___.','al','n'],['aisle seat','ที่นั่งริมทางเดิน','I would like an ___, please.','','n'],['round trip','ไปกลับ','A ___ ticket is cheaper.','','n'],['accommodation','ที่พัก','The price includes ___ and meals.','tion','n'],['board','ขึ้น (เครื่องบิน รถ เรือ)','Passengers may now ___ the plane.','','v']]},
+ {id:'hotel',dept:'เพนต์เฮาส์ห้องอาหาร',ex:['reception','banquet','concierge'],name:'โรงแรมและร้านอาหาร',en:'Hotels & restaurants',pos:'n',sx:['โรงแรม','ร้านอาหาร','งานเลี้ยง'],
+  rule:'ชั้นบนสุดของอาคาร ศัพท์โรงแรมและร้านอาหารมาในบทสนทนาจองห้อง Part 3 และรีวิวหรือเมนู Part 7 บางคำมาจากภาษาฝรั่งเศส สะกดยากหน่อย เช่น cuisine กับ concierge',
+  words:[['reception','แผนกต้อนรับ','Please ask at ___.','tion','n'],['vacancy','ห้องว่าง','The hotel has no ___ tonight.','cy','n'],['check in','เช็กอิน','Guests can ___ after lunch.','','v'],['amenities','สิ่งอำนวยความสะดวก','The hotel ___ include a pool.','','n'],['banquet','งานเลี้ยงใหญ่','The ___ hall seats three hundred people.','','n'],['catering','บริการจัดเลี้ยงอาหาร','Who is doing the ___ for the party?','','n'],['chef','พ่อครัว เชฟ','The ___ recommends the fish.','','n'],['menu','เมนู รายการอาหาร','The lunch ___ changes daily.','','n'],['beverage','เครื่องดื่ม','Food and ___ are included.','age','n'],['cuisine','อาหาร (ตามสไตล์ชาติ)','The restaurant serves Thai ___.','','n'],['housekeeping','แผนกแม่บ้าน','Please call ___ for more towels.','','n'],['concierge','พนักงานบริการแขก (โรงแรม)','The ___ booked a taxi for us.','','n'],['suite','ห้องชุด','We moved you to a larger ___.','','n'],['gratuity','ค่าทิป ค่าบริการ','A ten percent ___ is included.','ity','n'],['cater','จัดเลี้ยง','We can ___ events of any size.','','v']]}
+];
+const TOPIC_SENTS={
+ factory:['The **assembly** line stopped because a **shortage** of one **component** delayed the morning shift.','Our **supplier** promised to replace the **defective** parts before the next safety **inspection**.','The factory will **manufacture** more units this year because the new **machinery** is fully **automated**.','Workers who **operate** heavy **equipment** must attend the training course every six months.','Daily **output** has grown since we expanded the **warehouse** and increased our **capacity**.','The **quality control** team checks every **component** before it leaves the **assembly** area.','Please store the new **equipment** in the **warehouse** until the **inspection** is finished.'],
+ it:['The **technician** will **install** the new **software** on every **device** before Monday.','Please create a **backup** of the **database** before we **upgrade** the main **server** tonight.','A **malfunction** in the office **network** made it hard to get **access** to our files this morning.','If you forget your **password**, our support team can help you **troubleshoot** the problem.','Before you **download** the new app, check that it is **compatible** with your phone.','Only staff with special **access** may enter the **server** room after six in the evening.','The **network** will be slow tonight while the **technician** checks the **database** for errors.'],
+ market:['The new **advertisement** is part of a large **campaign** to **promote** our summer drinks.','According to the **survey**, most **consumer** comments about our **brand** were positive.','We will **launch** the product next month and offer an **exclusive** **discount** to members.','Customer **feedback** helped us change our **strategy** and reach a younger **target** group.','A local bank agreed to **sponsor** the product **demonstration** at the trade fair.','Our main **competitor** lowered its prices, so we must update our pricing **strategy** quickly.','The marketing team will **promote** the **brand** with an online **campaign** this autumn.'],
+ finance:['Please make a **deposit** into the company **account** so the **payroll** can be paid on time.','The bank offered us a **loan** with a low **interest** rate to support the new **investment**.','Every **transaction** is checked during the yearly **audit**, so please keep your receipts.','Our **profit** grew this year, and every **shareholder** will receive the **financial** report soon.','You can **withdraw** cash at any branch and check your **balance** with the mobile app.','Please send a cost **estimate** so we can plan the travel **expense** for the sales team.','The **financial** team reviews every **expense** before the end of each quarter.'],
+ travel:['Please show your **boarding pass** at the gate, because the **departure** time has changed.','Each **passenger** may bring one piece of **luggage** into the cabin.','Our flight had a long **delay**, so the **layover** in Singapore felt very short.','I made a **reservation** for a **round trip** ticket and asked for an **aisle seat**.','After you pass through **customs**, take the free bus from the **terminal** to the city.','The **fare** includes **accommodation** for two nights at our final **destination**.','Passengers may **board** the plane now, so please have your **boarding pass** ready.'],
+ hotel:['Please ask the staff at **reception** if there is a **vacancy** for two more nights.','Guests can **check in** after lunch and enjoy all hotel **amenities**, including the pool.','Our **chef** created a new **menu** that mixes Thai **cuisine** with fresh local fish.','The **catering** team will serve food and **beverage** at the company **banquet** on Friday.','Please call **housekeeping** for extra towels, or ask the **concierge** to book a taxi.','We moved you to a larger **suite**, and a small **gratuity** is already included in the bill.','The restaurant can **cater** for large groups, so we booked the **banquet** room for the party.']
+};
+
+/* ---------- ดาดฟ้า: คำใหม่ประจำสัปดาห์ (12 ชุด × 10 คำ เปลี่ยนทุกวันจันทร์) ---------- */
+const WEEK_POOL=[
+ ['acquire','ได้มา ซื้อกิจการ','v','The company plans to **acquire** a small design studio next year.'],['adjacent','อยู่ติดกัน','adj','The meeting room is **adjacent** to the main office on the third floor.'],['anticipate','คาดการณ์','v','We **anticipate** strong sales during the holiday season this year.'],['brochure','แผ่นพับ','n','Please pick up a **brochure** at the front desk for more details.'],['candidate','ผู้สมัคร ผู้เข้าชิง','n','Each **candidate** will meet the hiring manager on Tuesday.'],['commute','เดินทางไปทำงาน','v','Many employees **commute** to the office by train every morning.'],['delegate','มอบหมายงาน','v','Good managers know how to **delegate** tasks to their team members.'],['enclose','แนบมาด้วย','v','Please **enclose** a copy of your receipt with the return form.'],['fluctuate','ขึ้นลง ผันผวน','v','Fuel prices tend to **fluctuate** a lot during the winter months.'],['headquarters','สำนักงานใหญ่','n','Our **headquarters** moved to a larger building in the city center.'],
+ ['incentive','สิ่งจูงใจ','n','The sales team received a cash **incentive** for meeting its goals.'],['lease','สัญญาเช่า','n','We signed a five year **lease** for the new office space.'],['merger','การควบรวมกิจการ','n','The **merger** of the two banks was announced this morning.'],['outstanding','ค้างชำระ','adj','Please pay the **outstanding** amount before the end of the month.'],['personnel','บุคลากร','n','All **personnel** must wear an ID badge inside the building.'],['quota','โควตา เป้าที่กำหนด','n','Each salesperson has a monthly **quota** to meet.'],['reschedule','เลื่อนนัดใหม่','v','We need to **reschedule** the interview for Thursday afternoon.'],['tenant','ผู้เช่า','n','The new **tenant** will move into the second floor next month.'],['vendor','ผู้ขาย พ่อค้า','n','Every **vendor** at the fair must register before Friday.'],['waive','ยกเว้น (ค่าธรรมเนียม)','v','The bank agreed to **waive** the late fee this time.'],
+ ['appliance','เครื่องใช้ไฟฟ้า','n','This kitchen **appliance** comes with a two year warranty.'],['bulk','จำนวนมาก','n','Buying paper in **bulk** saves the office a lot of money.'],['courier','บริการส่งด่วน','n','The documents will arrive by **courier** tomorrow morning.'],['deduct','หัก (เงิน)','v','The company will **deduct** the cost from your next paycheck.'],['endorse','รับรอง สนับสนุน','v','Several famous athletes **endorse** our new running shoes.'],['fiscal','ทางการคลัง (ปีงบประมาณ)','adj','The **fiscal** year ends on the last day of March.'],['itemized','แจกแจงรายการ','adj','Please attach an **itemized** list of all travel costs.'],['logistics','โลจิสติกส์','n','Our **logistics** team plans every delivery route carefully.'],['memorandum','บันทึกภายใน','n','The manager sent a **memorandum** about the new dress code.'],['obsolete','ล้าสมัย เลิกใช้แล้ว','adj','These old printers are **obsolete** and will be replaced soon.'],
+ ['patron','ลูกค้าประจำ','n','Every **patron** of the library can borrow ten books.'],['quarterly','รายไตรมาส','adj','The **quarterly** report shows a small rise in sales.'],['refurbish','ปรับปรุงตกแต่งใหม่','v','We plan to **refurbish** the lobby with new furniture.'],['solicit','ขอ (ความเห็น การสนับสนุน)','v','The city will **solicit** ideas from residents about the new park.'],['tariff','ภาษีนำเข้า','n','A new **tariff** on steel will raise building costs.'],['utility','สาธารณูปโภค (น้ำ ไฟ)','n','The monthly **utility** bill includes water and electricity.'],['venue','สถานที่จัดงาน','n','The hotel ballroom is the perfect **venue** for the awards dinner.'],['workshop','การอบรมเชิงปฏิบัติการ','n','All new staff must attend a safety **workshop** this week.'],['yield','ผลตอบแทน','n','The investment offers a steady **yield** of five percent each year.'],['outsource','จ้างบริษัทภายนอก','v','Many firms **outsource** their customer service to save money.'],
+ ['abundant','มีอยู่มากมาย','adj','Fresh fruit is **abundant** at the market during the summer.'],['benefit','สวัสดิการ ผลประโยชน์','n','Free health care is one **benefit** of working here.'],['coordinate','ประสานงาน','v','Mr. Park will **coordinate** the visit of our overseas guests.'],['dedicated','ทุ่มเท','adj','She is a **dedicated** employee who never misses a deadline.'],['enroll','ลงทะเบียนเรียน','v','You can **enroll** in the evening English class online.'],['forward','ส่งต่อ','v','Please **forward** this email to everyone in your department.'],['hesitate','ลังเล','v','Do not **hesitate** to call me if you have any questions.'],['inquiry','การสอบถาม','n','We received an **inquiry** about our prices this morning.'],['justify','ให้เหตุผลรองรับ','v','You must **justify** every expense over one hundred dollars.'],['landmark','สถานที่สำคัญ','n','The old clock tower is a famous **landmark** in this town.'],
+ ['mentor','พี่เลี้ยง ที่ปรึกษา','n','Each new employee is paired with an experienced **mentor**.'],['notify','แจ้งให้ทราบ','v','Please **notify** the front desk if you plan to leave early.'],['overtime','การทำงานล่วงเวลา','n','Factory workers earned extra pay for working **overtime**.'],['preliminary','เบื้องต้น','adj','The **preliminary** results of the study look very promising.'],['qualified','มีคุณสมบัติเหมาะสม','adj','We are looking for a **qualified** accountant with five years of experience.'],['relocate','ย้ายที่ตั้ง','v','The company will **relocate** its offices to Chiang Mai.'],['surplus','ส่วนเกิน','n','The city used its budget **surplus** to build a new park.'],['tuition','ค่าเล่าเรียน','n','The company pays the **tuition** for staff who take night classes.'],['upcoming','ที่กำลังจะมาถึง','adj','Please prepare the slides for the **upcoming** board meeting.'],['voucher','บัตรกำนัล คูปอง','n','Every guest received a free meal **voucher** at the front desk.'],
+ ['adjourn','ปิดประชุม พักการประชุม','v','The chairman decided to **adjourn** the meeting until tomorrow.'],['bid','การเสนอราคา (ประมูล)','n','Three companies submitted a **bid** for the construction project.'],['clientele','กลุ่มลูกค้า','n','The shop has a loyal **clientele** of young professionals.'],['dispatch','ส่ง (ของ)','v','We will **dispatch** your order within two business days.'],['expedite','เร่งดำเนินการ','v','Please **expedite** this shipment because the client needs it urgently.'],['franchise','แฟรนไชส์','n','He opened a coffee **franchise** near the train station.'],['gross','รวมทั้งหมด (ก่อนหัก)','adj','Our **gross** income rose by eight percent last year.'],['incur','ทำให้เกิด (ค่าใช้จ่าย)','v','Customers who pay late may **incur** an additional service fee.'],['liability','ความรับผิดชอบทางกฎหมาย','n','The company accepts no **liability** for lost personal items.'],['negligible','น้อยมากจนไม่สำคัญ','adj','The difference in price between the two models is **negligible**.'],
+ ['objective','วัตถุประสงค์','n','The main **objective** of this meeting is to set new goals.'],['prospective','ที่คาดว่าจะเป็น','adj','We gave a factory tour to several **prospective** clients.'],['remittance','การโอนเงินชำระ','n','Please send your **remittance** to the address on the invoice.'],['stationery','เครื่องเขียน','n','Order more **stationery** before the supply room runs out.'],['tally','นับรวม','v','Please **tally** the votes and announce the winner.'],['unanimous','เป็นเอกฉันท์','adj','The board made a **unanimous** decision to approve the plan.'],['valid','มีผลใช้ได้','adj','Your passport must be **valid** for at least six months.'],['vacate','ย้ายออก คืนห้อง','v','Guests must **vacate** their rooms by noon on the last day.'],['wholesale','ขายส่ง','adj','We buy rice at **wholesale** prices from a local farm.'],['attire','เครื่องแต่งกาย','n','Business **attire** is required at the annual dinner.'],
+ ['bulletin','ประกาศ','n','The new schedule is posted on the **bulletin** board.'],['collaborate','ร่วมมือกัน','v','Our designers **collaborate** closely with the sales team.'],['consolidate','รวมเข้าด้วยกัน','v','We plan to **consolidate** the two warehouses into one.'],['discrepancy','ความคลาดเคลื่อน','n','There is a **discrepancy** between the invoice and the receipt.'],['expire','หมดอายุ','v','Your membership will **expire** at the end of this month.'],['figure','ตัวเลข','n','The sales **figure** for March was higher than expected.'],['intern','นักศึกษาฝึกงาน','n','The new **intern** will help us with the survey project.'],['mandate','คำสั่ง ข้อบังคับ','n','The government issued a **mandate** on workplace safety.'],['periodical','วารสาร นิตยสาร','n','The library keeps every **periodical** for one year.'],['retail','การค้าปลีก','n','She has ten years of experience in **retail** sales.'],
+ ['appraisal','การประเมินผล','n','Every employee has a performance **appraisal** once a year.'],['brief','สั้น กระชับ','adj','The manager gave a **brief** speech before lunch.'],['commission','ค่าคอมมิชชั่น','n','Sales staff earn a **commission** on every car they sell.'],['comprehensive','ครอบคลุม ครบถ้วน','adj','The guide offers a **comprehensive** list of local restaurants.'],['defer','เลื่อนออกไป','v','The board voted to **defer** the decision until next quarter.'],['diverse','หลากหลาย','adj','Our staff come from **diverse** backgrounds and countries.'],['equivalent','เทียบเท่า','adj','Applicants need a degree or **equivalent** work experience.'],['feasible','เป็นไปได้ ทำได้จริง','adj','The engineers said the plan is not **feasible** this year.'],['generate','สร้าง ก่อให้เกิด','v','The new store is expected to **generate** more income.'],['interim','ชั่วคราว ระหว่างกาล','adj','Ms. Chen will serve as **interim** director until June.'],
+ ['lucrative','ทำกำไรดี','adj','Selling coffee online has become a **lucrative** business.'],['modify','ดัดแปลง แก้ไข','v','We had to **modify** the design after the customer review.'],['nominate','เสนอชื่อ','v','Each team can **nominate** one member for the award.'],['opportunity','โอกาส','n','This job is a great **opportunity** to learn new skills.'],['permit','ใบอนุญาต','n','You need a **permit** to park your car in this area.'],['procedure','ขั้นตอน วิธีปฏิบัติ','n','Please follow the safety **procedure** at all times.'],['recipient','ผู้รับ','n','The **recipient** of the award will give a short speech.'],['revise','แก้ไขปรับปรุง','v','Please **revise** the report and send it back by noon.'],['specify','ระบุ','v','Please **specify** the size and color when you order.'],['transfer','ย้าย (สาขา) โอน','v','She asked to **transfer** to the branch in Phuket.'],
+ ['unveil','เปิดตัว เผยโฉม','v','The company will **unveil** its new logo at the conference.'],['venture','กิจการร่วมทุน','n','The two firms started a joint **venture** in Vietnam.'],['withhold','ระงับ ยังไม่จ่าย','v','The client may **withhold** payment until the work is finished.'],['adhere','ยึดถือปฏิบัติตาม','v','All drivers must **adhere** to the speed limit on site.'],['complaint','ข้อร้องเรียน','n','The manager replied to the **complaint** within one hour.'],['convene','เรียกประชุม','v','The committee will **convene** again next Monday.'],['designate','แต่งตั้ง กำหนด','v','Please **designate** one person to lock the office each night.'],['fragile','แตกง่าย','adj','Please handle this box with care because it is **fragile**.'],['proficient','เชี่ยวชาญ คล่อง','adj','Applicants must be **proficient** in English and Thai.'],['substantial','จำนวนมาก มากพอสมควร','adj','The new policy led to **substantial** savings for the company.']
+];
+const WEEK_SETS=Math.floor(WEEK_POOL.length/10);
+const WEEK_BASE=new Date(2024,0,1).getTime(); /* วันจันทร์ */
+function weekInfo(){
+  const t=new Date(),mid=new Date(t.getFullYear(),t.getMonth(),t.getDate()).getTime();
+  const d=Math.round((mid-WEEK_BASE)/864e5),no=Math.floor(d/7),dow=((d%7)+7)%7;
+  return {no,set:((no%WEEK_SETS)+WEEK_SETS)%WEEK_SETS,left:7-dow};
+}
+function makeWeekLevel(){
+  const W=weekInfo(),items=WEEK_POOL.slice(W.set*10,W.set*10+10);
+  const id='wk'+W.no;
+  SENTS[id]=items.map(e=>e[3]);
+  return {id,week:true,wk:W,dept:'คำใหม่ประจำสัปดาห์',ex:items.slice(0,3).map(e=>e[0]),name:`ชุดที่ ${W.set+1}/${WEEK_SETS}`,en:'Weekly new words',pos:'n',
+    sx:['10 คำใหม่',`เปลี่ยนชุดอีก ${W.left} วัน`,'ทุกวันจันทร์'],
+    rule:`คำศัพท์ TOEIC ชุดใหม่ 10 คำ เปลี่ยนให้อัตโนมัติทุกวันจันทร์ วนครบ ${WEEK_SETS} ชุดแล้วเริ่มใหม่ ดาดฟ้าเปิดให้เล่นได้ตลอด ไม่ต้องปลดล็อกชั้นก่อน เล่นให้จบอย่างน้อยสัปดาห์ละครั้งเพื่อเก็บสถิติต่อเนื่อง`,
+    words:items.map(e=>[e[0],e[1],e[3].replace(/\*\*(.+?)\*\*/,'___'),'',e[2]])};
+}
+
+/* ---------- ชุดคำจากเอกสาร lesson6 (ใช้เฉพาะ "คำ" เป็นแหล่งอ้างอิง คำแปล ประโยคตัวอย่าง และการจัดหมวด เขียนขึ้นใหม่ทั้งหมด) ---------- */
+const L6_LEVELS=[
+ {id:'event',dept:'ฮอลล์จัดงาน',ex:['conference','keynote','booth'],name:'งานประชุมและอีเวนต์',en:'Conferences & events',pos:'n',sx:['สัมมนา','นิทรรศการ','งานเลี้ยง'],
+  rule:'ศัพท์งานประชุมและอีเวนต์มาบ่อยในประกาศ Part 4 และอีเมลเชิญ Part 7 สังเกตคำนามที่บอกคน เช่น attendee (ผู้เข้าร่วม) กับ host (เจ้าภาพ)',
+  words:[['conference','การประชุมใหญ่','The ___ starts at nine.','ence','n'],['keynote','ปาฐกถาหลัก','She will give the ___ speech.','','n'],['session','ช่วง (ของการประชุม)','The morning ___ ends at noon.','sion','n'],['exhibition','นิทรรศการ','The art ___ opens on Friday.','tion','n'],['booth','บูธ','Visit our ___ near the entrance.','','n'],['attendee','ผู้เข้าร่วมงาน','Each ___ receives a name tag.','ee','n'],['panel','คณะผู้อภิปราย','The ___ answered many questions.','','n'],['presentation','การนำเสนอ','Her ___ was clear and short.','tion','n'],['speech','สุนทรพจน์','The mayor gave a short ___.','','n'],['invitation','คำเชิญ บัตรเชิญ','Thank you for the kind ___.','tion','n'],['showcase','จัดแสดง','The fair will ___ local products.','','v'],['register','ลงทะเบียน','Please ___ before Monday.','','v'],['host','เป็นเจ้าภาพ','Our city will ___ the event.','','v'],['festival','เทศกาล','The music ___ lasts three days.','','n'],['farewell','การอำลา','We held a ___ party for Ken.','','n']]},
+ {id:'facility',dept:'ฝ่ายอาคารสถานที่',ex:['projector','furniture','repair'],name:'อาคารและสำนักงาน',en:'Office & facilities',pos:'n',sx:['อุปกรณ์','ซ่อมบำรุง','พื้นที่'],
+  rule:'ศัพท์อาคารและสำนักงานเจอมากใน Part 1 ภาพถ่าย และประกาศปิดซ่อม Part 7 คำกริยาอย่าง repair กับ maintain มักมาคู่กับ facilities หรือ equipment',
+  words:[['projector','เครื่องฉายภาพ','The ___ is on the table.','or','n'],['headset','หูฟังพร้อมไมค์','She is wearing a ___.','','n'],['furniture','เฟอร์นิเจอร์','The new ___ arrives today.','ure','n'],['entrance','ทางเข้า','Meet me at the main ___.','ance','n'],['parking','ที่จอดรถ','Free ___ is available.','','n'],['lounge','ห้องพักรับรอง','Coffee is served in the ___.','','n'],['notice','ประกาศ','Read the ___ on the wall.','','n'],['repair','ซ่อม','A worker will ___ the roof.','','v'],['maintain','บำรุงรักษา','We ___ all machines monthly.','','v'],['installation','การติดตั้ง','The ___ takes one hour.','tion','n'],['contractor','ผู้รับเหมา','The ___ fixed the floor.','or','n'],['layout','ผังการจัดวาง','We changed the office ___.','','n'],['seating','การจัดที่นั่ง','The ___ plan is ready.','','n'],['damage','ความเสียหาย','The storm caused some ___.','age','n'],['label','ฉลาก ป้าย','Put a ___ on each box.','','n']]},
+ {id:'service',dept:'เคาน์เตอร์บริการลูกค้า',ex:['delivery','parcel','resolve'],name:'บริการลูกค้า',en:'Customer service',pos:'n',sx:['ขอโทษ','แก้ปัญหา','จัดส่ง'],
+  rule:'ศัพท์บริการลูกค้ามาในอีเมลขอโทษและแจ้งปัญหาการจัดส่ง Part 7 จำคู่คำ เช่น apologize for, resolve the issue และ handle a request',
+  words:[['inconvenience','ความไม่สะดวก','We are sorry for the ___.','ence','n'],['apologize','ขอโทษ','We ___ for the delay.','ize','v'],['request','คำขอ','We received your ___.','','n'],['resolve','แก้ไข (ปัญหา)','We will ___ the problem soon.','','v'],['response','การตอบกลับ','Thank you for your quick ___.','','n'],['delivery','การจัดส่ง','___ is free on weekdays.','ery','n'],['parcel','พัสดุ','Your ___ arrived this morning.','','n'],['checkout','จุดชำระเงิน','Please pay at the ___.','','n'],['handle','จัดการ รับมือ','She will ___ your order.','','v'],['issue','ปัญหา ประเด็น','We fixed the login ___.','','n'],['replacement','ของที่เปลี่ยนให้ใหม่','We will send a ___ today.','ment','n'],['available','ว่าง มีให้ใช้','The room is ___ now.','able','adj'],['priority','สิ่งสำคัญอันดับแรก','Safety is our first ___.','ity','n'],['assist','ช่วยเหลือ','Our staff will ___ you.','','v'],['appreciate','ขอบคุณ ซาบซึ้ง','We ___ your patience.','ate','v']]},
+ {id:'people',dept:'ห้องพัฒนาบุคลากร',ex:['leadership','interview','training'],name:'คนและการทำงาน',en:'People & teamwork',pos:'n',sx:['ผู้นำ','สัมภาษณ์','ผลงาน'],
+  rule:'ศัพท์เรื่องคนทำงานมาในข่าวภายในบริษัทและประกาศรับสมัครงาน Part 7 ระวังคำคุณศัพท์ที่ลงท้ายต่างกัน เช่น committed (ทุ่มเท) กับ constructive (สร้างสรรค์)',
+  words:[['leadership','ความเป็นผู้นำ','Her ___ helped the team.','ship','n'],['position','ตำแหน่ง (งาน)','He applied for the ___.','tion','n'],['interview','การสัมภาษณ์','The ___ is on Tuesday.','','n'],['expertise','ความเชี่ยวชาญ','We need your ___ in sales.','ise','n'],['insight','ความเข้าใจลึกซึ้ง','Thank you for the useful ___.','','n'],['training','การฝึกอบรม','New staff need two days of ___.','','n'],['employee','พนักงาน','Every ___ gets a laptop.','ee','n'],['advisor','ที่ปรึกษา','Ask your ___ for help.','or','n'],['oversee','ควบคุมดูแล','She will ___ the new project.','','v'],['task','งาน ภารกิจ','Finish this ___ by Friday.','','n'],['progress','ความคืบหน้า','We made good ___ today.','','n'],['achieve','บรรลุ ทำได้สำเร็จ','We ___ our goal every year.','','v'],['performance','ผลการปฏิบัติงาน','Her ___ was excellent.','ance','n'],['constructive','สร้างสรรค์','Thank you for the ___ comments.','ive','adj'],['committed','ทุ่มเท มุ่งมั่น','We are ___ to quality.','ed','adj']]},
+ {id:'health',dept:'คลินิกและสิ่งแวดล้อม',ex:['patient','appointment','organic'],name:'สุขภาพและสิ่งแวดล้อม',en:'Health & environment',pos:'n',sx:['โรงพยาบาล','อาหาร','สภาพอากาศ'],
+  rule:'ศัพท์สุขภาพเจอใน Part 1 ภาพโรงพยาบาลหรือร้านยา ส่วนศัพท์สิ่งแวดล้อมและสภาพอากาศมาในข่าวและประกาศ Part 4 เช่น พายุทำให้ปิดถนน',
+  words:[['patient','คนไข้','The doctor is checking a ___.','ent','n'],['physician','แพทย์','Please see your ___ today.','ian','n'],['surgery','การผ่าตัด','The ___ went very well.','ery','n'],['medicine','ยา','Take this ___ after meals.','','n'],['appointment','การนัดหมาย','I have an ___ at three.','ment','n'],['medical','ทางการแพทย์','She works in a ___ center.','al','adj'],['examine','ตรวจ (ร่างกาย)','The doctor will ___ you now.','','v'],['organic','ออร์แกนิก ปลอดสารเคมี','We sell ___ vegetables.','ic','adj'],['filter','ตัวกรอง','Change the water ___ monthly.','','n'],['purification','การทำให้บริสุทธิ์','The water ___ system is new.','tion','n'],['chemical','สารเคมี','Do not mix these ___ products.','al','adj'],['environmental','เกี่ยวกับสิ่งแวดล้อม','We follow strict ___ rules.','al','adj'],['weather','สภาพอากาศ','The ___ is nice today.','','n'],['storm','พายุ','The ___ closed the road.','','n'],['severe','รุนแรง','___ rain is expected tonight.','','adj']]},
+ {id:'retail',dept:'ช็อปพรีเมียม',ex:['cashier','restock','display'],name:'ร้านค้าและสินค้า',en:'Retail & products',pos:'n',sx:['หน้าร้าน','สินค้า','ลูกค้า'],
+  rule:'ศัพท์ร้านค้าเจอมากใน Part 1 ภาพซูเปอร์มาร์เก็ต และโฆษณาสินค้า Part 7 สังเกตคำที่ใช้บรรยายสินค้า เช่น feature, specification และ reliability',
+  words:[['cashier','พนักงานเก็บเงิน','The ___ gave me a receipt.','ier','n'],['shelf','ชั้นวาง','Put the books on the ___.','','n'],['cart','รถเข็น','She is pushing a shopping ___.','','n'],['restock','เติมสินค้า','We ___ the shelves at night.','','v'],['display','จัดแสดง','The shop will ___ new shoes.','','v'],['item','สินค้า รายการ','This ___ is on sale.','','n'],['gourmet','สำหรับนักชิม ระดับพรีเมียม','They sell ___ coffee.','','adj'],['flavor','รสชาติ','Which ___ do you like?','','n'],['package','พัสดุ แพ็กเกจ','The ___ includes two bags.','age','n'],['specification','ข้อมูลจำเพาะ สเปก','Check the ___ before you buy.','tion','n'],['feature','คุณสมบัติเด่น','This phone has a new ___.','ure','n'],['option','ตัวเลือก','There is a cheaper ___.','tion','n'],['reliability','ความน่าเชื่อถือ','We test every car for ___.','ity','n'],['convenience','ความสะดวก','Shop online for ___.','ence','n'],['preference','ความชอบ สิ่งที่ต้องการ','Tell us your seat ___.','ence','n']]},
+ {id:'media',dept:'สตูดิโอสื่อและข่าว',ex:['announce','podcast','reputation'],name:'สื่อและประกาศ',en:'Media & announcements',pos:'n',sx:['ข่าว','ออนไลน์','ภาพลักษณ์'],
+  rule:'ศัพท์สื่อและประกาศมาในข่าวประชาสัมพันธ์และรายการวิทยุ Part 4 กับ Part 7 คำว่า press release คือข่าวที่บริษัทส่งให้สื่อ มักขึ้นต้นด้วยการ announce บางอย่าง',
+  words:[['announce','ประกาศ','We are pleased to ___ a new store.','','v'],['press release','ข่าวประชาสัมพันธ์','The company sent a ___.','','n'],['podcast','พอดแคสต์','Listen to our weekly ___.','','n'],['listener','ผู้ฟัง','Thank you to every ___.','er','n'],['stream','ถ่ายทอดสด สตรีม','We will ___ the show online.','','v'],['reader','ผู้อ่าน','Each ___ gets a free guide.','er','n'],['review','บทวิจารณ์ รีวิว','The book got a good ___.','','n'],['reputation','ชื่อเสียง','The hotel has a great ___.','tion','n'],['visibility','การมองเห็น การเป็นที่รู้จัก','Ads improve our brand ___.','ity','n'],['advertising','การโฆษณา','We spend a lot on ___.','','n'],['website','เว็บไซต์','Visit our ___ for details.','','n'],['profile','ประวัติย่อ โปรไฟล์','Update your ___ online.','','n'],['update','ข้อมูลล่าสุด','Here is a quick ___ on sales.','','n'],['content','เนื้อหา','We post new ___ every day.','','n'],['digital','ดิจิทัล','We sell ___ books too.','al','adj']]},
+ {id:'tech',dept:'ห้องแล็บนวัตกรรม',ex:['outage','laptop','breakthrough'],name:'เทคโนโลยีและนวัตกรรม',en:'Technology & innovation',pos:'n',sx:['ระบบล่ม','อุปกรณ์','งานวิจัย'],
+  rule:'ต่อยอดจากชั้นไอที ศัพท์ชุดนี้เจอในอีเมลแจ้งระบบล่ม Part 7 และข่าวงานวิจัย Part 4 คำว่า outage (ระบบหรือไฟดับ) เป็นคำที่ TOEIC ชอบใช้มาก',
+  words:[['outage','การดับ การล่ม (ระบบ ไฟ)','The power ___ lasted an hour.','age','n'],['error','ข้อผิดพลาด','There is an ___ in the file.','or','n'],['laptop','แล็ปท็อป','Bring your ___ to the meeting.','','n'],['printer','เครื่องพิมพ์','The ___ is out of paper.','er','n'],['tablet','แท็บเล็ต','She takes notes on a ___.','','n'],['internet','อินเทอร์เน็ต','The ___ is very slow today.','','n'],['developer','นักพัฒนา','Our ___ fixed the app.','er','n'],['technology','เทคโนโลยี','New ___ saves us time.','','n'],['biotechnology','เทคโนโลยีชีวภาพ','He works in ___ research.','','n'],['breakthrough','การค้นพบครั้งสำคัญ','The team made a ___.','','n'],['research','การวิจัย','The ___ took two years.','','n'],['optimize','ปรับให้ดีที่สุด','We ___ the site for phones.','ize','v'],['efficiency','ประสิทธิภาพ','The new tool improves ___.','ency','n'],['advanced','ขั้นสูง ทันสมัย','This is an ___ course.','ed','adj'],['interactive','โต้ตอบได้','The museum has ___ games.','ive','adj']]}
+];
+const L6_SENTS={
+ event:['The **keynote** **speech** at the **conference** will begin right after the morning **session**.','Every **attendee** should **register** online before visiting our **booth** at the **exhibition**.','The **panel** answered questions after a short **presentation** about new travel trends.','Thank you for the **invitation** to the **farewell** dinner for our team leader.','Our city will **host** a food **festival** to **showcase** local farms and restaurants.','Please **register** early, because the afternoon **session** usually fills up quickly.','The **exhibition** will **showcase** new phones, and each **attendee** gets a free bag.'],
+ facility:['The **contractor** will **repair** the **damage** to the roof before the rainy season starts.','Please leave the **projector** and the **headset** in the **lounge** after the meeting.','The new **furniture** arrived, so we changed the office **layout** and the **seating** plan.','Read the **notice** near the main **entrance** for **parking** rules during the renovation.','Our team will **maintain** the new machines after the **installation** is complete.','Put a **label** on every box before the **contractor** moves the **furniture**.','The **installation** of new lights near the **entrance** will take about two hours.'],
+ service:['We **apologize** for the **inconvenience** and will send a **replacement** right away.','Our staff will **handle** your **request** and **resolve** the **issue** within one day.','Thank you for your quick **response**, we **appreciate** your patience.','Your **parcel** is ready, and free **delivery** is **available** for all members.','Customer safety is our first **priority**, so please ask staff to **assist** you.','Please pay at the **checkout** and keep your receipt in case you need a **replacement**.','We received your **request** and will reply with a full **response** by Friday.'],
+ people:['Her strong **leadership** and sales **expertise** helped the team **achieve** its goal.','Every new **employee** must complete two days of **training** before starting any **task**.','We will **interview** three people for the open **position** next week.','Ms. Diaz will **oversee** the project and report our **progress** every Friday.','Our **advisor** shared a useful **insight** about improving team **performance**.','Thank you for the **constructive** feedback, we are **committed** to doing better.','The **interview** went well because she explained her **expertise** clearly.'],
+ health:['The **physician** will **examine** the **patient** before the **surgery** tomorrow morning.','Please call to make an **appointment** if you need more **medicine**.','Our **medical** center uses a new water **purification** system with a strong **filter**.','We sell **organic** vegetables grown without any **chemical** products.','The **storm** brought **severe** **weather**, so the city closed several roads.','The company follows strict **environmental** rules to protect the river.','Change the water **filter** every month to keep the system clean and safe.'],
+ retail:['The **cashier** helped a customer while staff **restock** the empty **shelf**.','We **display** each new **item** near the entrance so shoppers can see it.','This **gourmet** coffee comes in three **flavor** choices and a gift **package**.','Please check the **specification** of each **option** before you place an order.','Our customers choose this car for its **reliability** and smart safety **feature**.','For your **convenience**, you can tell us your size **preference** online.','She left her shopping **cart** near the **cashier** and went back for one more **item**.'],
+ media:['We are pleased to **announce** the new store in a **press release** this morning.','Every **listener** of our **podcast** can **stream** the show online for free.','A good **review** in the newspaper helped the **reputation** of our small hotel.','Online **advertising** will improve the **visibility** of our brand among young people.','Visit our **website** to read the latest **update** and change your **profile**.','We post fresh **content** every week for each **reader** of our **digital** magazine.','The **press release** gave a short **update** about the company and its new **website**.'],
+ tech:['The power **outage** caused an **error** on every **laptop** in the office.','Our **developer** worked hard to **optimize** the app and improve its **efficiency**.','The **printer** and the **internet** are both down, so please use your **tablet** today.','The **biotechnology** team made a **breakthrough** after three years of **research**.','This **advanced** course uses **interactive** lessons to teach new **technology**.','Please restart your **laptop** if you see an **error** after the **outage**.','New **technology** helps doctors share **research** with other hospitals quickly.']
+};
+
+/* ลำดับชั้น 7–20 เรียงตามความหรูของฉาก */
+const TOPIC_ORDER=['facility','service','retail','people','health','factory','it','tech','media','market','event','finance','travel','hotel'];
+{const by={};[...TOPIC_LEVELS,...L6_LEVELS].forEach(L=>by[L.id]=L);LEVELS.push(...TOPIC_ORDER.map(id=>by[id]));Object.assign(SENTS,TOPIC_SENTS,L6_SENTS);}
+const NF=LEVELS.length; /* 12 ชั้นจริง */
+LEVELS.push(makeWeekLevel()); /* index NF = ดาดฟ้า */
+
+/* ---------- อาคารหรู: ฉากพิกเซลแต่ละชั้น (สร้างด้วยโค้ด ไม่มีไฟล์ภาพ) ---------- */
+const GOLD='#D4AF37',GOLD_D='#9C7A1E',GOLD_L='#F3DC8A';
+const SKY={
+  day:{top:'#8FCBF2',bot:'#CBE8FA',city:'#7F95AD',lit:null,sun:'#FFF3B0'},
+  noon:{top:'#7EBDEB',bot:'#BFE0F7',city:'#728AA4',lit:null,sun:'#FFF3B0'},
+  aft:{top:'#9CC3E6',bot:'#F2DDB3',city:'#6E7F96',lit:null,sun:'#FFE08A'},
+  sunset:{top:'#F0A47A',bot:'#F8D59A',city:'#5E5470',lit:'#FFD46B',sun:'#FFB347'},
+  dusk:{top:'#5B4C8A',bot:'#E58C7A',city:'#3A3150',lit:'#FFD46B',sun:null},
+  night:{top:'#141B3A',bot:'#2C3768',city:'#1D2240',lit:'#FFD46B',sun:null}
+};
+const TIERS=[
+ /* 1 */{wall:'#9AA0A7',wallB:'#868C93',wallT:'concrete',ceil:'#6E747C',trim:null,floor:'#80878F',floorB:'#6C727A',floorT:'tile',sky:'day',win:[104,12,'#5E646B'],light:'tube',props:[['boxes',122],['cabinet',134],['cabinet',141],['boxes',150]]},
+ /* 2 */{wall:'#DCD1BE',wallB:'#CFC3AE',wallT:'paint',ceil:'#EDEAE3',trim:null,floor:'#5D6F8F',floorB:'#52627F',floorT:'carpet',sky:'day',win:[100,14,'#E9E6DF'],light:'tube',props:[['plant',118],['desk',126],['cabinet',148]]},
+ /* 3 */{wall:'#E7E0CC',wallB:'#CFD8C0',wallT:'stripe',ceil:'#F2EEE4',trim:'#B9AD95',floor:'#A97B50',floorB:'#8E6440',floorT:'wood',sky:'day',win:[98,18,'#F4F1EA'],light:'panel',props:[['shelf',122],['desk',132],['plant',150]]},
+ /* 4 */{wall:'#EFE3CB',wallB:'#8A5A36',wallT:'wainscot',ceil:'#F4ECDD',trim:'#B07B4A',floor:'#94643E',floorB:'#7A5032',floorT:'wood',sky:'day',win:[98,16,'#8A5A36'],light:'pendant',props:[['frame',120,['#5DA2C9','#E7B04B']],['sofa',126],['lamp',146],['plant',152]]},
+ /* 5 */{wall:'#BFDDEB',wallB:'#7FA7BB',wallT:'glass',ceil:'#F2F4F5',trim:'#C9CFD3',floor:'#ECE8DF',floorB:'#CFC8B9',floorT:'marble',sky:'noon',win:null,light:'pendant',props:[['mtable',118],['plant',140],['mtable',144]]},
+ /* 6 */{wall:'#5C3B25',wallB:'#714A2F',wallT:'wood',ceil:'#3F2818',trim:GOLD,floor:'#4A2F1D',floorB:'#3B2416',floorT:'wood',rug:'#8E2B2B',sky:'noon',win:[100,16,GOLD_D],light:'sconce',props:[['bookshelf',120],['execdesk',132],['globe',152]]},
+ /* 7 facility */{wall:'#E4DFD6',wallB:'#CBC4B6',wallT:'marble',ceil:'#EEEAE3',trim:'#B8902F',floor:'#C9CCD1',floorB:'#8E949C',floorT:'checker',sky:'noon',win:[98,14,'#B8902F'],light:'panel',props:[['ladder',118],['toolcab',126],['projcart',140],['plant',152]]},
+ /* 8 service */{wall:'#F0E7D4',wallB:'#DCCDAF',wallT:'marble',ceil:'#F5EFE2',trim:GOLD,floor:'#EAE2D0',floorB:'#CDBB95',floorT:'marble',sky:'noon',win:[98,14,GOLD_D],light:'pendant',props:[['parcels',114],['counter',124],['bell',134],['plant',152]]},
+ /* 9 retail */{wall:'#F3ECE0',wallB:'#E0D3BC',wallT:'marble',ceil:'#F6F0E6',trim:GOLD,floor:'#E9E2D4',floorB:'#BFA77A',floorT:'inlay',sky:'aft',win:[96,12,GOLD],light:'spot',props:[['boutique',112],['boutique',124],['shopcart',140],['boutique',148]]},
+ /* 10 people */{wall:'#B98A5E',wallB:'#A3754B',wallT:'wood',ceil:'#8E6340',trim:GOLD,floor:'#7A2F35',floorB:'#94414A',floorT:'carpet',sky:'aft',win:[98,14,GOLD],light:'sconce',props:[['flipchart',114],['chair',126],['chair',134],['chair',142],['plant',152]]},
+ /* 11 health */{wall:'#F6F7F5',wallB:'#DDE3E0',wallT:'marble',ceil:'#FBFBFA',trim:GOLD,floor:'#EEF1EF',floorB:'#BFD6CF',floorT:'marble',sky:'aft',win:[98,14,GOLD],light:'panel',props:[['cross',114],['bed',122],['dispenser',142],['palm',150]]},
+ /* 12 factory */{wall:'#D9DBDF',wallB:'#B4B8BF',wallT:'marble',ceil:'#ECEDEF',trim:GOLD,floor:'#D6D8DC',floorB:'#5A5E66',floorT:'checker',sky:'aft',win:[98,16,GOLD_D],light:'sconce',props:[['gauges',118],['control',126],['column',150]]},
+ /* 13 it */{wall:'#24252C',wallB:GOLD_D,wallT:'blackmarble',ceil:'#17181D',trim:GOLD,floor:'#1B1C22',floorB:'#3A3C46',floorT:'black',sky:'aft',win:[98,14,GOLD],light:'spot',props:[['server',116],['server',124],['server',132],['column',142],['server',148]]},
+ /* 14 tech */{wall:'#E9ECEF',wallB:'#C3CAD2',wallT:'marble',ceil:'#F1F3F5',trim:GOLD,floor:'#1E2028',floorB:'#F1F3F5',floorT:'checker',sky:'sunset',win:[96,14,GOLD],light:'spot',props:[['holo',112],['labbench',122],['microscope',140],['column',152]]},
+ /* 15 media */{wall:'#1F2A44',wallB:'#2C3A5C',wallT:'acoustic',ceil:'#141C30',trim:GOLD,floor:'#2A2A33',floorB:'#3A3A46',floorT:'black',sky:'sunset',win:null,light:'spot',props:[['onair',100],['camera',114],['mic',132],['sofa2',138],['lamp',154]]},
+ /* 16 market */{wall:'#F1E8D6',wallB:'#D8C9A8',wallT:'marble',ceil:'#F7F1E6',trim:GOLD,floor:'#EEE5D2',floorB:'#CDBB95',floorT:'marble',sky:'sunset',win:[96,14,GOLD],light:'spot',props:[['frame',114,['#C8473F','#2F6FA3']],['rope',124],['frame',130,['#2E8B57','#F2C230']],['rope',141],['frame',146,['#7A4FA0','#E58FA0']]]},
+ /* 17 event */{wall:'#6E1F2A',wallB:'#8C2A37',wallT:'curtain',ceil:'#4A141C',trim:GOLD,floor:'#3A2A22',floorB:'#5A4232',floorT:'wood',sky:'dusk',win:null,light:'chandelier',props:[['stage',104],['podium',128],['seats',140]]},
+ /* 18 finance */{wall:'#F4F0E8',wallB:'#D9CFBB',wallT:'marble',ceil:'#EFE6D0',trim:GOLD,floor:'#F5F2EA',floorB:'#1E1E24',floorT:'checker',sky:'dusk',win:[96,12,GOLD],light:'sconce',props:[['column',112],['vault',118],['goldbars',136],['column',152]]},
+ /* 19 travel */{wall:'#EADFC9',wallB:'#CDB98E',wallT:'marble',ceil:'#E6D6B0',trim:GOLD,floor:'#E9E1CE',floorB:GOLD,floorT:'inlay',sky:'dusk',win:[96,22,GOLD],arch:true,light:'chandelier',props:[['palm',122],['armchair',128],['globe',140],['armchair',146],['column',154]]},
+ /* 20 hotel */{wall:'#C9A03C',wallB:'#E6C463',wallT:'goldpanel',ceil:'#8E6B1C',trim:GOLD_L,floor:'#EDE4CF',floorB:'#8E2B2B',floorT:'runner',sky:'night',win:[92,26,GOLD_L],arch:true,light:'chandelier',props:[['dining',124],['candle',122],['column',152]]}
+];
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function scene(i){
+  const W=160,H=24,T=TIERS[i],rnd=mulberry(i*977+13);let o='';
+  const r=(x,y,w,h,c)=>{if(w>0&&h>0)o+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`};
+  const px=(x,y,c)=>r(x,y,1,1,c);
+  /* wall */
+  r(0,0,W,20,T.wall);
+  if(T.wallT==='concrete'){for(let k=0;k<260;k++)px(rnd()*W|0,2+rnd()*17|0,T.wallB);for(let x=0;x<W;x+=20)r(x,3,1,17,T.wallB);}
+  if(T.wallT==='stripe')for(let x=0;x<W;x+=4)r(x,3,2,17,T.wallB);
+  if(T.wallT==='wainscot'){r(0,12,W,8,T.wallB);r(0,12,W,1,T.trim);for(let x=2;x<W;x+=10){r(x,14,7,1,'#A9774E');r(x,14,1,4,'#A9774E');r(x,18,7,1,'#6E4428');r(x+6,14,1,5,'#6E4428');}}
+  if(T.wallT==='glass'){for(let x=0;x<W;x+=12)r(x,2,1,18,T.wallB);r(0,10,W,1,T.wallB);for(let k=0;k<40;k++){const x=rnd()*W|0,y=3+rnd()*6|0;r(x,y,2,1,'#E3F1F8');}
+    /* city behind glass */let x=0;while(x<W){const w=3+rnd()*5|0,h=3+rnd()*7|0;r(x,19-h,w,h,'#9DB6C6');x+=w+1;}}
+  if(T.wallT==='wood'){for(let x=0;x<W;x+=14){r(x+1,4,12,7,T.wallB);r(x+1,12,12,7,T.wallB);r(x+1,4,12,1,'#7E5537');r(x+1,12,12,1,'#7E5537');}}
+  if(T.wallT==='marble'||T.wallT==='blackmarble'){for(let k=0;k<14;k++){let x=rnd()*W|0,y=3+rnd()*4|0;for(let s=0;s<14;s++){px(x,y,T.wallB);x+=rnd()<.5?1:0;y+=rnd()<.6?1:0;if(y>19)break;}}
+    for(let x=0;x<W;x+=20)r(x,3,1,17,T.wallT==='blackmarble'?'#121318':T.wallB);}
+  if(T.wallT==='acoustic'){for(let x=0;x<W;x+=8)for(let y=4;y<18;y+=5){r(x+1,y,6,4,T.wallB);r(x+1,y,6,1,'#3A4A70');}}
+  if(T.wallT==='curtain'){for(let x=0;x<W;x+=4){r(x,3,2,17,T.wallB);px(x+1,4+(x%3),'#A63A48');}r(0,3,W,2,GOLD_D);for(let x=1;x<W;x+=4)px(x,5,GOLD);}
+  if(T.wallT==='goldpanel'){for(let x=0;x<W;x+=16){r(x+2,5,12,14,T.wallB);r(x+3,4,10,1,T.wallB);r(x+5,3,6,1,T.wallB);r(x+3,6,10,12,'#D8B24E');r(x+7,8,2,8,GOLD_L);}}
+  /* ceiling + trim */
+  r(0,0,W,2,T.ceil);if(T.trim){r(0,2,W,1,T.trim);if(T.trim===GOLD||T.trim===GOLD_L)for(let x=1;x<W;x+=3)px(x,2,GOLD_D);}
+  /* window */
+  if(T.win){const [wx,ww,fc]=T.win,wy=4,wh=T.arch?14:10;win(wx,wy,ww,wh,fc,SKY[T.sky],T.arch);}
+  /* floor */
+  r(0,20,W,4,T.floor);
+  if(T.floorT==='tile'){for(let x=0;x<W;x+=6)r(x,20,1,4,T.floorB);r(0,22,W,1,T.floorB);}
+  if(T.floorT==='carpet'){for(let y=20;y<24;y++)for(let x=(y%2)*2;x<W;x+=4)px(x,y,T.floorB);}
+  if(T.floorT==='wood'){for(let y=20;y<24;y++){const off=(y*7)%11;for(let x=off;x<W;x+=11)px(x,y,T.floorB);}r(0,21,W,0,T.floorB);}
+  if(T.floorT==='marble'){for(let k=0;k<30;k++){const x=rnd()*W|0;r(x,20+(rnd()*4|0),2+(rnd()*3|0),1,T.floorB);}}
+  if(T.floorT==='checker'){for(let y=20;y<24;y+=2)for(let x=0;x<W;x+=4)r(x+((y/2)%2?2:0),y,2,2,T.floorB);}
+  if(T.floorT==='black'){for(let x=0;x<W;x+=12)r(x,20,1,4,'#2A2C35');for(let k=0;k<20;k++)px(rnd()*W|0,21+(rnd()*2|0),T.floorB);}
+  if(T.floorT==='inlay'){r(0,22,W,1,T.floorB);for(let x=4;x<W;x+=8){px(x,21,T.floorB);px(x,23,T.floorB);}}
+  if(T.floorT==='runner'){r(0,21,W,2,T.floorB);r(0,20,W,1,GOLD);r(0,23,W,1,GOLD);for(let x=3;x<W;x+=6)px(x,22,'#B24A3A');}
+  if(T.rug){r(118,20,40,3,T.rug);r(118,20,40,1,GOLD);for(let x=120;x<158;x+=4)px(x,21,'#B8463E');}
+  /* baseboard */
+  r(0,19,W,1,T.trim||'#6E747C');
+  /* lights */
+  lights(T.light);
+  T.props.forEach(p=>prop(p[0],p[1],p[2]));
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMaxYMid slice" shape-rendering="crispEdges" aria-hidden="true">${o}</svg>`;
+
+  function win(x,y,w,h,fc,S,arch){
+    for(let k=0;k<h;k++){r(x,y+k,w,1,k<h/2?S.top:S.bot);}
+    if(S.sun)r(x+w-5,y+2,2,2,S.sun);
+    if(S===SKY.night)for(let k=0;k<10;k++)px(x+1+(rnd()*(w-2)|0),y+1+(rnd()*(h/2)|0),'#FFFFFF');
+    if(S===SKY.day||S===SKY.noon){r(x+2,y+2,4,1,'#FFFFFF');r(x+3,y+1,2,1,'#FFFFFF');}
+    let cx=x;while(cx<x+w){const bw=2+rnd()*3|0,bh=2+rnd()*(h*0.55)|0;r(cx,y+h-bh,Math.min(bw,x+w-cx),bh,S.city);
+      if(S.lit)for(let yy=y+h-bh+1;yy<y+h;yy+=2)for(let xx=cx;xx<Math.min(cx+bw,x+w);xx+=2)if(rnd()<.55)px(xx,yy,S.lit);cx+=bw;}
+    if(arch){px(x,y,T.wall);px(x+1,y,T.wall);px(x,y+1,T.wall);px(x+w-1,y,T.wall);px(x+w-2,y,T.wall);px(x+w-1,y+1,T.wall);
+      r(x+2,y-1,w-4,1,fc);px(x+1,y,fc);px(x,y+1,fc);px(x+w-2,y,fc);px(x+w-1,y+1,fc);r(x-1,y+2,1,h-2,fc);r(x+w,y+2,1,h-2,fc);}
+    else{r(x-1,y-1,w+2,1,fc);r(x-1,y,1,h,fc);r(x+w,y,1,h,fc);}
+    r(x-2,y+h,w+4,1,fc);r(x+(w>>1),y,1,h,fc);if(!arch)r(x,y+(h>>1)-1,w,1,fc);
+  }
+  function lights(kind){
+    if(kind==='tube')for(let x=8;x<W;x+=26){r(x,2,10,1,'#F4F7F2');r(x+1,3,8,1,'rgba(255,255,230,.35)');}
+    if(kind==='panel')for(let x=10;x<W;x+=24)r(x,2,8,1,'#FFFDF2');
+    if(kind==='pendant')for(let x=112;x<W;x+=18){r(x+1,2,1,3,'#3A3A3A');r(x-1,5,5,2,'#2F2F2F');r(x,7,3,1,'#FFE7A3');}
+    if(kind==='sconce')for(let x=108;x<W;x+=24){r(x,9,2,2,GOLD);r(x,8,2,1,'#FFE7A3');px(x-1,7,'rgba(255,231,163,.6)');px(x+2,7,'rgba(255,231,163,.6)');}
+    if(kind==='spot')for(let x=114;x<W;x+=14){r(x,3,2,1,'#2A2A2A');r(x-1,4,4,1,'rgba(255,240,190,.22)');r(x-2,5,6,2,'rgba(255,240,190,.14)');}
+    if(kind==='chandelier')[118,142].forEach(cx=>{r(cx+3,3,1,2,GOLD_D);r(cx,5,7,1,GOLD);r(cx-1,6,9,1,GOLD_D);for(let k=0;k<5;k++){px(cx+k*2-1,7,'#DFF4FF');px(cx+k*2-1,8,'#BFE6FF');}px(cx+3,9,'#FFFFFF');r(cx,4,1,1,'#FFE7A3');r(cx+6,4,1,1,'#FFE7A3');});
+  }
+  function prop(k,x,a){
+    const F=19; /* floor line: props stand with bottom at y=19 */
+    if(k==='cabinet'){r(x,10,6,10,'#6F7780');r(x+1,11,4,4,'#8A929B');r(x+1,16,4,3,'#8A929B');r(x+2,12,2,1,'#3A3F45');r(x+2,17,2,1,'#3A3F45');}
+    if(k==='boxes'){r(x,14,7,6,'#C49A62');r(x+3,14,1,6,'#A27A47');r(x+1,9,5,5,'#D3AA72');r(x+3,9,1,5,'#A27A47');}
+    if(k==='plant'){r(x+1,16,4,4,'#B5653C');r(x+1,16,4,1,'#8E4C2C');r(x+2,11,2,5,'#3D8B4E');r(x,12,2,2,'#4FA65F');r(x+4,11,2,2,'#4FA65F');r(x+1,9,2,2,'#5CBF6E');r(x+3,10,2,2,'#3D8B4E');}
+    if(k==='desk'){r(x,14,14,1,'#8E6440');r(x,15,14,1,'#6F4C30');r(x+1,16,1,4,'#6F4C30');r(x+12,16,1,4,'#6F4C30');r(x+8,15,4,5,'#7A5536');r(x+3,10,6,4,'#2A2F3A');r(x+4,11,4,2,'#6FB3E0');r(x+5,14,2,0,'#2A2F3A');}
+    if(k==='shelf'){r(x,8,8,12,'#B08A5E');for(let y=10;y<19;y+=3){r(x+1,y,6,2,'#E8E1D3');r(x+1,y,1,2,'#5B8CC2');r(x+3,y,1,2,'#D46A5A');r(x+5,y,1,2,'#E4B84A');}}
+    if(k==='frame'){const [c1,c2]=a;r(x,6,9,7,GOLD);r(x+1,7,7,5,'#F7F2E6');r(x+2,8,3,3,c1);r(x+4,9,3,2,c2);if(T.light==='spot'){r(x+1,13,7,1,'rgba(0,0,0,.12)');}}
+    if(k==='sofa'){r(x,14,16,4,'#3F8C88');r(x,12,16,3,'#357A76');r(x-1,13,2,5,'#2E6A67');r(x+15,13,2,5,'#2E6A67');r(x+1,18,1,2,'#3A2A1E');r(x+14,18,1,2,'#3A2A1E');r(x+3,13,4,2,'#F2C230');}
+    if(k==='lamp'){r(x+2,8,5,3,'#F3E3B8');r(x+4,11,1,8,'#4A4A4A');r(x+2,19,5,1,'#4A4A4A');}
+    if(k==='mtable'){r(x,14,16,2,'#F7F7F5');r(x,16,16,1,'#B9C2C8');r(x+7,17,2,3,'#9AA3AA');r(x+2,11,3,3,'#2F3B4C');r(x+11,11,3,3,'#2F3B4C');r(x+6,13,4,1,'#E2E8EC');}
+    if(k==='bookshelf'){r(x,5,10,15,'#3E2716');for(let y=6;y<19;y+=4){r(x+1,y,8,3,'#2A1A0F');const cs=['#8E2B2B','#2F5E8A','#C9A03C','#3D7A4E','#6E4C8E'];for(let b=0;b<8;b+=(1+(rnd()*2|0)))r(x+1+b,y+(rnd()<.3?1:0),1,3-(rnd()<.3?1:0),cs[(b+y)%5]);r(x,y+3,10,1,GOLD_D);}}
+    if(k==='execdesk'){r(x,13,18,2,'#2E1B10');r(x,13,18,1,GOLD);r(x+1,15,16,5,'#3E2716');r(x+3,16,4,3,'#4E321D');r(x+11,16,4,3,'#4E321D');r(x+5,17,1,1,GOLD);r(x+13,17,1,1,GOLD);r(x+8,10,4,3,'#1E1E24');r(x+12,11,2,2,'#FFE7A3');}
+    if(k==='globe'){r(x+1,8,6,6,'#3E7CB8');r(x+2,9,2,2,'#5FA35A');r(x+4,11,2,2,'#5FA35A');r(x,10,1,3,GOLD);r(x+7,10,1,3,GOLD);r(x+3,14,2,4,GOLD_D);r(x+1,18,6,2,GOLD);}
+    if(k==='gauges'){[0,5].forEach(d=>{r(x+d,7,4,4,GOLD);r(x+d+1,8,2,2,'#F7F2E6');px(x+d+2,8,'#8E2B2B');});r(x,12,9,1,GOLD_D);}
+    if(k==='control'){r(x,14,20,2,'#3A3F49');r(x,14,20,1,GOLD);r(x+1,16,18,4,'#2B2F37');for(let s=0;s<3;s++){r(x+1+s*7,8,5,5,'#1E2229');r(x+2+s*7,9,3,3,s===1?'#59C27A':'#4FA3D9');}for(let b=0;b<6;b++)px(x+2+b*3,17,['#E25D5D','#F2C230','#59C27A'][b%3]);}
+    if(k==='column'){r(x,4,4,15,'#F4F1EA');r(x+1,4,1,15,'#E3DDD0');r(x-1,3,6,2,GOLD);r(x-1,18,6,2,GOLD);px(x+3,6,'#FFFFFF');}
+    if(k==='server'){r(x,6,6,14,'#15161B');r(x,6,6,1,GOLD);r(x,19,6,1,GOLD);for(let y=8;y<19;y+=2){r(x+1,y,4,1,'#2A2C35');px(x+4,y,rnd()<.5?'#59C27A':'#4FA3D9');}}
+    if(k==='rope'){r(x,13,1,7,GOLD);r(x-1,12,3,1,GOLD_L);r(x+5,13,1,7,GOLD);r(x+4,12,3,1,GOLD_L);r(x+1,14,4,1,'#9E2F35');px(x+2,15,'#9E2F35');px(x+3,15,'#9E2F35');}
+    if(k==='vault'){r(x+2,4,12,15,GOLD_D);r(x+3,5,10,13,GOLD);r(x+5,5,6,1,GOLD_D);r(x+5,17,6,1,GOLD_D);r(x+3,8,1,7,GOLD_D);r(x+12,8,1,7,GOLD_D);r(x+6,8,4,7,'#E9C86B');r(x+7,10,2,3,GOLD_D);r(x+8,6,0,0,'');r(x+7,6,2,1,GOLD_L);r(x+7,15,2,1,GOLD_L);r(x+4,11,2,1,GOLD_L);r(x+10,11,2,1,GOLD_L);}
+    if(k==='goldbars'){[[0,17],[5,17],[10,17],[2,15],[7,15],[4,13]].forEach(([dx,y])=>{r(x+dx,y,5,2,GOLD);r(x+dx+1,y,3,1,GOLD_L);r(x+dx,y+1,5,1,GOLD_D);});r(x-1,19,17,1,'#2A2A2A');}
+    if(k==='palm'){r(x+1,16,4,4,GOLD);r(x+2,10,1,6,'#6E4C2E');r(x-2,9,4,1,'#3D8B4E');r(x+3,9,4,1,'#3D8B4E');r(x-1,8,3,1,'#4FA65F');r(x+3,8,3,1,'#4FA65F');r(x+1,7,3,2,'#5CBF6E');px(x-3,10,'#3D8B4E');px(x+7,10,'#3D8B4E');}
+    if(k==='armchair'){r(x,11,6,6,'#7A1F2B');r(x+1,12,4,4,'#962A38');r(x-1,14,8,3,'#7A1F2B');r(x,17,6,1,GOLD);px(x,18,GOLD_D);px(x+5,18,GOLD_D);px(x,19,GOLD_D);px(x+5,19,GOLD_D);}
+    if(k==='dining'){r(x,14,24,2,'#FBFAF6');r(x,16,24,2,'#E8E4DA');r(x+2,18,1,2,GOLD_D);r(x+21,18,1,2,GOLD_D);for(let d=2;d<24;d+=6){r(x+d,13,3,1,'#FFFFFF');px(x+d+1,12,'#D9E4EA');}r(x+11,10,1,4,GOLD);r(x+10,9,3,1,GOLD);px(x+11,8,'#FFB347');px(x+10,8,'#FFE7A3');px(x+12,8,'#FFE7A3');}
+    if(k==='ladder'){r(x,6,1,14,'#9AA0A7');r(x+5,6,1,14,'#9AA0A7');for(let y=8;y<19;y+=3)r(x,y,6,1,'#B8BEC5');}
+    if(k==='toolcab'){r(x,9,10,11,'#9C3B32');r(x,9,10,1,GOLD);for(let y=11;y<19;y+=2){r(x+1,y,8,1,'#7E2E27');px(x+4,y,GOLD_L);px(x+5,y,GOLD_L);}r(x+1,7,3,2,'#6E747C');r(x+5,8,4,1,'#C7CCD2');}
+    if(k==='projcart'){r(x,14,10,1,'#4A4F57');r(x+1,15,1,4,'#4A4F57');r(x+8,15,1,4,'#4A4F57');r(x,18,10,1,'#4A4F57');px(x+1,19,'#222');px(x+8,19,'#222');r(x+2,11,6,3,'#2F333B');r(x+6,12,2,1,'#BFE6FF');px(x+8,12,'rgba(191,230,255,.5)');}
+    if(k==='parcels'){r(x,15,6,5,'#C49A62');r(x+1,16,3,1,'#FFFFFF');r(x+6,13,5,7,'#B88B55');r(x+7,15,3,1,'#FFFFFF');r(x+2,11,5,4,'#D3AA72');r(x+4,11,1,4,'#A27A47');}
+    if(k==='counter'){r(x,13,22,2,'#3E2716');r(x,13,22,1,GOLD);r(x+1,15,20,5,'#5C3B25');for(let d=3;d<20;d+=6)r(x+d,16,4,3,'#714A2F');r(x+5,10,4,3,'#2A2F3A');r(x+6,11,2,1,'#6FB3E0');}
+    if(k==='bell'){r(x,12,4,1,GOLD_D);r(x+1,10,2,2,GOLD);px(x+1,10,GOLD_L);px(x+2,9,GOLD_D);}
+    if(k==='boutique'){r(x,6,10,14,'#3E2716');r(x,6,10,1,GOLD);for(let y=8;y<19;y+=4){r(x+1,y,8,3,'#F7EEDC');r(x,y+3,10,1,GOLD_D);const cs=['#C8473F','#2F6FA3','#E7B04B','#7A4FA0','#2E8B57'];for(let b=0;b<3;b++)r(x+2+b*3,y+1,2,2,cs[(b+y+x)%5]);}}
+    if(k==='shopcart'){r(x,12,9,1,'#B8BEC5');r(x+1,13,7,4,'rgba(184,190,197,.55)');r(x+1,13,7,1,'#B8BEC5');r(x+1,16,7,1,'#B8BEC5');r(x+8,10,1,3,'#B8BEC5');r(x+2,14,3,2,'#E7B04B');px(x+2,19,'#333');px(x+7,19,'#333');r(x+1,17,7,1,'#8E949C');}
+    if(k==='flipchart'){r(x+1,5,10,10,'#FFFFFF');r(x+1,5,10,1,'#3A3A3A');r(x+3,11,1,2,'#2F6FA3');r(x+5,9,1,4,'#2E8B57');r(x+7,7,1,6,'#C8473F');r(x+3,15,1,5,'#5A3E2B');r(x+9,15,1,5,'#5A3E2B');r(x+6,15,1,5,'#5A3E2B');}
+    if(k==='chair'){r(x+1,11,5,4,'#2F3B4C');r(x,15,7,2,'#3A4A60');r(x+1,17,1,3,GOLD_D);r(x+5,17,1,3,GOLD_D);}
+    if(k==='cross'){r(x,6,8,8,GOLD);r(x+1,7,6,6,'#FFFFFF');r(x+3,8,2,4,'#2E9E7A');r(x+2,9,4,2,'#2E9E7A');}
+    if(k==='bed'){r(x,14,18,2,'#FFFFFF');r(x,16,18,1,'#C9D3DC');r(x+4,13,14,1,'#5BB5A8');r(x+4,14,14,2,'#6FC7BA');r(x,11,4,3,'#F4F6F8');r(x-1,10,1,10,'#9AA3AA');r(x+18,13,1,7,'#9AA3AA');px(x+2,19,'#555');px(x+16,19,'#555');}
+    if(k==='dispenser'){r(x+1,6,4,5,'#7EC3F0');r(x+1,6,4,1,'#5FA8DA');r(x,11,6,9,'#F4F6F8');r(x+1,13,4,1,'#9AA3AA');px(x+1,14,'#5C9EDB');px(x+4,14,'#D9534F');}
+    if(k==='holo'){r(x,5,9,7,'rgba(110,220,255,.35)');r(x,5,9,1,'#6EDCFF');r(x+2,7,5,1,'#BDF2FF');r(x+2,9,3,1,'#BDF2FF');r(x+4,12,1,7,GOLD_D);r(x+2,19,5,1,GOLD);}
+    if(k==='labbench'){r(x,14,16,2,'#2B2F37');r(x,14,16,1,GOLD);r(x+1,16,14,4,'#3A3F49');r(x+2,11,2,3,'#8EE0B5');px(x+2,10,'#D9E4EA');r(x+6,12,3,2,'#F2A0C8');px(x+7,10,'#D9E4EA');px(x+7,11,'#D9E4EA');r(x+11,11,2,3,'#9FC7FF');}
+    if(k==='microscope'){r(x+1,18,6,2,'#2F333B');r(x+5,11,1,7,'#2F333B');r(x+2,9,4,2,'#2F333B');r(x+2,12,3,1,GOLD);px(x+1,10,'#BFE6FF');}
+    if(k==='onair'){r(x,5,12,4,'#2A0E12');r(x+1,6,10,2,'#E04848');for(let d=2;d<10;d+=2)px(x+d,6,'#FFE1E1');}
+    if(k==='camera'){r(x+2,9,7,4,'#202227');r(x+9,10,2,2,'#3A3D46');px(x+10,10,'#6FB3E0');px(x+3,9,'#E04848');r(x+5,13,1,6,'#555');r(x+2,19,7,1,'#555');px(x+3,18,'#555');px(x+7,18,'#555');}
+    if(k==='mic'){r(x+2,8,2,3,'#3A3D46');r(x+2,8,2,1,'#8A8F9A');r(x+3,11,1,8,'#6E747C');r(x+1,19,5,1,GOLD);}
+    if(k==='sofa2'){r(x,14,12,4,'#2F3B5C');r(x,12,12,3,'#283350');r(x-1,13,2,5,'#222B45');r(x+11,13,2,5,'#222B45');r(x+1,18,1,2,GOLD_D);r(x+10,18,1,2,GOLD_D);r(x+2,13,3,2,GOLD);}
+    if(k==='stage'){r(x,15,26,5,'#3E2716');r(x,15,26,1,GOLD);r(x,3,4,12,'#9E2F35');r(x+22,3,4,12,'#9E2F35');r(x,3,26,2,'#7A1C1C');for(let d=0;d<26;d+=3)px(x+d,5,GOLD);r(x+6,4,14,1,'rgba(255,240,190,.25)');r(x+8,5,10,10,'rgba(255,240,190,.12)');r(x+10,8,6,3,'#F7F2E6');r(x+11,9,4,1,'#C9A03C');}
+    if(k==='podium'){r(x,12,6,8,GOLD_D);r(x+1,12,4,8,GOLD);r(x-1,11,8,1,GOLD_L);r(x+2,14,2,2,'#7A1C1C');r(x+3,9,1,2,'#3A3D46');}
+    if(k==='seats'){for(let d=0;d<18;d+=4){r(x+d,15,3,3,'#9E2F35');r(x+d,14,3,1,'#B8463E');px(x+d,18,GOLD_D);px(x+d+2,18,GOLD_D);}}
+    if(k==='candle'){r(x,13,1,6,GOLD);r(x-1,19,3,1,GOLD);px(x,12,'#FFB347');}
+  }
+}
+function roofScene(){
+  const W=160,H=24,rnd=mulberry(4242);let o='';
+  const r=(x,y,w,h,c)=>{if(w>0&&h>0)o+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`};
+  for(let k=0;k<20;k++)r(0,k,W,1,['#0E1430','#121A3C','#182248','#1E2A55','#253264'][Math.min(4,k/4|0)]);
+  for(let k=0;k<45;k++)r(rnd()*W|0,rnd()*12|0,1,1,rnd()<.2?'#FFE7A3':'#FFFFFF');
+  r(140,3,4,4,'#F7F0D2');r(141,3,3,3,'#FFFBEA');r(139,4,1,2,'rgba(247,240,210,.4)');
+  let x=0;while(x<W){const w=4+rnd()*7|0,h=3+rnd()*8|0;r(x,20-h,w,h,'#2A3160');for(let yy=21-h;yy<19;yy+=2)for(let xx=x+1;xx<x+w-1;xx+=2)if(rnd()<.35)r(xx,yy,1,1,'#FFD46B');x+=w+1;}
+  r(0,18,W,6,'#3B3F4A');r(0,18,W,1,'#5A5F6C');
+  r(108,19,40,4,'#2F333D');r(110,20,36,2,'#454A57');r(126,19,1,4,GOLD_L);r(130,19,1,4,GOLD_L);r(127,20,3,1,GOLD_L);
+  for(let k=112;k<146;k+=6)r(k,21,2,1,'#F2C230');
+  for(let k=2;k<W;k+=6)r(k,14,1,4,GOLD);r(0,14,W,1,GOLD);
+  r(152,6,1,12,'#8A8F9A');r(151,5,3,1,'#E25D5D');r(150,4,5,1,'rgba(226,93,93,.35)');
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMaxYMid slice" shape-rendering="crispEdges" aria-hidden="true">${o}</svg>`;
+}
+const FLOOR_ART=TIERS.map((_,i)=>scene(i)),ROOF_ART=roofScene();
+const flLabel=i=>LEVELS[i].week?'ดาดฟ้า':`ชั้น ${i+1}`;
+const weeksPlayed=()=>{const v=store.get('tt-weeks');return Array.isArray(v)?v:[]};
+function weekStreak(){const s=new Set(weeksPlayed()),no=LEVELS[NF].wk.no;let k=s.has(no)?no:no-1,n=0;while(s.has(k)){n++;k--;}return n;}
+
+const GLOSS={};
+LEVELS.forEach(L=>{(L.words||[]).forEach(w=>GLOSS[w[0]]={pos:w[4]||L.pos,th:w[1]});(L.fams||[]).forEach(f=>f.forEach(w=>GLOSS[w[0]]={pos:w[1],th:w[2]}));});
+const levelTerms=L=>L.fams?L.fams.flat().map(w=>w[0]):L.words.map(w=>w[0]);
+function parseSent(str){
+  let w='';const b=[],terms=[];
+  str.split('**').forEach((seg,i)=>{const t=i%2?seg.toLowerCase():null;if(t)terms.push(t);for(const ch of seg){w+=ch;b.push(t)}});
+  return {sent:true,w,b,terms:[...new Set(terms)],pos:'sent',th:'พิมพ์ทั้งประโยค คำศัพท์ TOEIC เป็นตัวหนา'};
+}
+function validSent(str,set){
+  if(typeof str!=='string')return false;
+  const plain=str.replace(/\*\*/g,'');
+  if(!/^[A-Za-z ,.]+$/.test(plain)||plain.length<40||plain.length>230)return false;
+  const parts=str.split('**');if(parts.length<3||parts.length%2===0)return false;
+  return parts.every((p,i)=>i%2===0||set.has(p.toLowerCase()));
+}
+
+/* ---------- finger map ---------- */
+const FING={lp:'qaz',lr:'wsx',lm:'edc',li:'rfvtgb',ri:'yhnujm',rm:'ik,',rr:'ol.',rp:'p;/',th:' '};
+const FNAME={lp:'นิ้วก้อยซ้าย',lr:'นิ้วนางซ้าย',lm:'นิ้วกลางซ้าย',li:'นิ้วชี้ซ้าย',ri:'นิ้วชี้ขวา',rm:'นิ้วกลางขวา',rr:'นิ้วนางขวา',rp:'นิ้วก้อยขวา',th:'นิ้วโป้ง'};
+const K2F={};for(const f in FING)for(const c of FING[f])K2F[c]=f;
+const ROWS=['qwertyuiop','asdfghjkl;','zxcvbnm,./'];
+
+/* ---------- storage ---------- */
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- state ---------- */
+let mode='sent',limit=0,sound=store.get('tt-sound')!==false,lvIdx=0;
+let S=null;
+const $=id=>document.getElementById(id);
+const trap=$('trap');
+
+function show(id){document.querySelector('.app').classList.toggle('wide',id==='play'&&S&&!S.warm);['home','brief','play','result'].forEach(s=>$(s).classList.toggle('hidden',s!==id));if(id==='home')requestAnimationFrame(()=>placeCar(topFloor()));window.scrollTo(0,0);if(id!=='play')trap.blur();}
+
+/* ---------- home ---------- */
+const passed=()=>{const v=store.get('tt-passed');return Array.isArray(v)?v:[]};
+const unlocked=i=>i===0||!!LEVELS[i].week||passed().includes(LEVELS[i-1].id);
+const topFloor=()=>{let t=0;for(let i=0;i<NF;i++){if(unlocked(i))t=i;else break;}return t};
+function carTo(i,animate){
+  const car=$('car'),fl=document.querySelector(`.floor[data-i="${i}"]`);if(!car||!fl)return;
+  if(!animate)car.style.transition='none';
+  car.style.top=(fl.offsetTop+6)+'px';car.style.height=(fl.offsetHeight-12)+'px';
+  const ind=car.querySelector('b'),from=+ind.textContent||0;clearInterval(carTick);
+  if(animate&&from&&from!==i+1){let n=from;const d=Math.sign(i+1-from);carTick=setInterval(()=>{n+=d;ind.textContent=n;if(n===i+1)clearInterval(carTick);},Math.max(70,1050/Math.abs(i+1-from)));}
+  else ind.textContent=i+1;
+  if(!animate){car.offsetHeight;car.style.transition='';}
+}
+let carAnim=false,carTick=null,CAR_PX=null,carBlinkT=null;
+function carPX(){return CAR_PX||(CAR_PX={idle:pix('idle',2),blink:pix('blink',2),happy:pix('happy',2),jelly:pix('jelly',2),jellyz:pix('jellyz',2)});}
+function carPU(f){const p=document.querySelector('#car .pu');if(p)p.innerHTML=carPX()[f];}
+function carArrive(){const car=$('car');if(!car)return;car.classList.remove('closed');car.classList.add('arrive');carPU('happy');setTimeout(()=>{car.classList.remove('arrive');carPU('idle');},1050);}
+function carBlink(){clearTimeout(carBlinkT);carBlinkT=setTimeout(()=>{const car=$('car');if(car&&!$('home').classList.contains('hidden')&&!car.classList.contains('arrive')&&!car.classList.contains('closed')){carPU('blink');setTimeout(()=>{if(!car.classList.contains('arrive'))carPU('idle')},150);}carBlink();},2800+Math.random()*2600);}
+carBlink();
+function placeCar(top){
+  if($('home').classList.contains('hidden')||carAnim)return;
+  const last=store.get('tt-car');
+  if(typeof last==='number'&&last<top&&last>=0){
+    carTo(last,false);carAnim=true;$('car').classList.add('closed');
+    setTimeout(()=>{carTo(top,true);setTimeout(()=>{carAnim=false;sfx('ding');carArrive();const f=document.querySelector(`.floor[data-i="${top}"]`);if(f)f.classList.add('fresh');},1100);},550);
+  }else carTo(top,false);
+  store.set('tt-car',top);
+}
+window.addEventListener('resize',()=>{if(!$('home').classList.contains('hidden'))carTo(topFloor(),false)});
+function renderHome(){
+  $('modeHint').textContent=mode==='see'?'เห็นคำเต็ม ๆ และมีไฟบอกว่าต้องกดปุ่มไหน ด้วยนิ้วไหน':mode==='spell'?'เห็นแค่ความหมายภาษาไทยกับชนิดคำ ต้องสะกดเอง ถ้ากดผิด 2 ครั้งจะเฉลยตัวนั้น':'พิมพ์ประโยคธุรกิจยาว ๆ คำศัพท์ TOEIC เป็นตัวหนาพร้อมความหมายใต้ประโยค ไม่ต้องกด Shift ตัวใหญ่พิมพ์เป็นตัวเล็กได้';
+  if(limit)$('modeHint').textContent+=` · พิมพ์ให้ได้มากที่สุดใน ${limit===60?'60 วินาที':'2 นาที'} เวลาเริ่มนับเมื่อกดปุ่มแรก`;
+  $('modeSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===mode));
+  $('limitSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.limit===limit));
+  const top=topFloor();
+  const wk=LEVELS[NF],wb=store.get(bestKey(wk.id)),stk=weekStreak();
+  const roof=`<li class="floor deck" data-i="${NF}"><span class="shaftcell" aria-hidden="true">R</span>
+    <button class="lvl" data-i="${NF}" aria-label="ดาดฟ้า ${wk.dept}"><span class="fart">${ROOF_ART}</span><span class="t">ดาดฟ้า · ${wk.dept}<small>${wk.name} · ชุดใหม่มาในอีก ${wk.wk.left} วัน</small></span>
+    <span class="ex">${wk.ex.map(w=>`<span>${w}</span>`).join('')}</span>
+    <span class="best">${wb?`<strong>${wb.wpm}</strong>WPM ${wb.acc}%`:'ชุดนี้ยังไม่ได้เล่น'}${stk?`<br><span class="pass">ต่อเนื่อง ${stk} สัปดาห์</span>`:''}</span></button></li>`;
+  $('levels').innerHTML=roof+LEVELS.slice(0,NF).map((L,i)=>({L,i})).reverse().map(({L,i})=>{
+    const b=store.get(bestKey(L.id)),open=unlocked(i),ok=passed().includes(L.id);
+    const right=!open?`ผ่านชั้น ${i} ก่อน`:b?`<strong>${b.wpm}</strong>WPM ${b.acc}%`:'ยังไม่เคยเล่น';
+    return `<li class="floor${open?'':' locked'}${i===top?' here':''}${i>=5?' gold':''}" data-i="${i}"><span class="shaftcell" aria-hidden="true">${i+1}</span>
+    <button class="lvl" data-i="${i}" ${open?'':'disabled'} aria-label="ชั้น ${i+1} ${L.dept}${open?'':' ล็อกอยู่'}"><span class="fart">${FLOOR_ART[i]}</span><span class="t">${L.dept}<small>ชั้น ${i+1} · ${L.name} · ${L.en}</small></span>
+    <span class="ex">${L.ex.map(w=>`<span>${w}</span>`).join('')}</span>
+    <span class="best">${open?'':'🔒 '}${right}${ok?'<br><span class="pass">ผ่านแล้ว ✓</span>':''}</span></button></li>`}).join('')+`<div class="car" id="car" aria-hidden="true"><b></b><div class="cab"><span class="pu">${carPX().idle}</span><span class="ck">${carPX().jelly}</span><i class="door l"></i><i class="door r"></i></div></div>`;
+  requestAnimationFrame(()=>placeCar(top));
+}
+$('modeSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.mode;renderHome();});
+$('limitSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;limit=+b.dataset.limit;renderHome();});
+const bestKey=id=>'tt-best-'+id+'-'+mode+(limit?'-t'+limit:'');
+$('levels').addEventListener('click',e=>{const b=e.target.closest('.lvl');if(!b)return;openBrief(+b.dataset.i);});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){endRound();renderHome();show(g.dataset.go);}});
+function setSound(){ $('soundBtn').textContent='เสียง: '+(sound?'เปิด':'ปิด');$('soundBtn').setAttribute('aria-pressed',sound);}
+$('soundBtn').addEventListener('click',()=>{sound=!sound;store.set('tt-sound',sound);setSound();});
+const THEMES=['auto','light','dark'],TNAME={auto:'อัตโนมัติ',light:'☀ สว่าง',dark:'☾ มืด'};
+let theme=store.get('tt-theme');if(!THEMES.includes(theme))theme='auto';
+function setTheme(){
+  if(theme==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',theme);
+  $('themeBtn').textContent='ธีม: '+TNAME[theme];$('themeBtn').setAttribute('aria-label','โหมดความสว่าง: '+TNAME[theme]);
+}
+$('themeBtn').addEventListener('click',()=>{theme=THEMES[(THEMES.indexOf(theme)+1)%3];store.set('tt-theme',theme);setTheme();});
+setTheme();
+let swStyle=store.get('tt-switch')||'lime';
+function setSwitch(){$('switchBtn').textContent='เสียงคีย์: '+(swStyle==='lime'?'นุ่ม':'คลาสสิก');}
+$('switchBtn').addEventListener('click',()=>{swStyle=swStyle==='lime'?'classic':'lime';store.set('tt-switch',swStyle);setSwitch();const old=sound;sound=true;sfx('key');setTimeout(()=>sfx('up'),85);sound=old;});
+setSwitch();
+
+const FSHORT={lp:'ก้อย',lr:'นาง',lm:'กลาง',li:'ชี้',ri:'ชี้',rm:'กลาง',rr:'นาง',rp:'ก้อย'};
+const HOME='asdfjkl;';
+function handHTML(fs){return `<div class="hand">${fs.map(([f,c])=>`<span class="fg ${c}" data-f="${f}" style="--fc:var(--${f})" title="${FNAME[f]}"></span>`).join('')}</div>`}
+const HANDS=[[['lp','p'],['lr','r'],['lm','m'],['li','i'],['th','t']],[['th','t'],['ri','i'],['rm','m'],['rr','r'],['rp','p']]];
+function buildGuide(){
+  $('gkb').innerHTML=ROWS.map(r=>`<div class="row">${[...r].map(c=>{const f=K2F[c],h=HOME.includes(c);
+    return `<span class="key${h?' hk':''}${c==='f'||c==='j'?' bump home':''}" data-k="${c}" data-f="${f}" style="--fc:var(--${f})">${c}${h?`<small>${FSHORT[f]}</small>`:''}</span>`}).join('')}</div>`).join('')
+   +`<div class="row"><span class="key space hk" data-k=" " data-f="th" style="--fc:var(--th)">space · นิ้วโป้ง</span></div>`;
+  $('fchips').innerHTML=Object.keys(FNAME).map(f=>`<button data-f="${f}" aria-pressed="false" style="--fc:var(--${f})"><i></i>${FNAME[f]}</button>`).join('');
+  $('ghands').innerHTML=handHTML(HANDS[0])+handHTML(HANDS[1]);
+}
+let gFocus=null;
+function focusFinger(f){
+  gFocus=gFocus===f?null:f;
+  $('fchips').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===gFocus));
+  $('gkb').querySelectorAll('.key').forEach(k=>k.classList.toggle('dim',!!gFocus&&k.dataset.f!==gFocus));
+  $('ghands').querySelectorAll('.fg').forEach(x=>x.classList.toggle('on',x.dataset.f===gFocus));
+  $('gcap').textContent=gFocus?`${FNAME[gFocus]} ดูแลปุ่ม ${[...FING[gFocus]].map(c=>c===' '?'space':c.toUpperCase()).join(' ')}`:'ลองกดแป้นดู ปุ่มที่กดจะขึ้นบนภาพพร้อมบอกนิ้วที่ใช้ วางมือเสร็จแล้วกด space เพื่อเริ่ม';
+}
+$('fchips').addEventListener('click',e=>{const b=e.target.closest('button');if(b)focusFinger(b.dataset.f);});
+document.addEventListener('keydown',e=>{
+  if($('brief').classList.contains('hidden')||e.ctrlKey||e.metaKey)return;
+  if(e.key===' '||e.code==='Space'){e.preventDefault();if(!e.repeat)startRound(true);return;}
+  if(!$('guide').open)return;
+  const c=e.key.toLowerCase();const k=$('gkb').querySelector(`.key[data-k="${CSS.escape(c)}"]`);
+  if(!k)return;if(c===' ')e.preventDefault();
+  sfx(c===' '?'space':'key');
+  k.classList.add('press');setTimeout(()=>k.classList.remove('press'),180);
+  const f=K2F[c];
+  $('ghands').querySelectorAll('.fg').forEach(x=>x.classList.toggle('on',x.dataset.f===f));
+  $('gcap').innerHTML=`<b style="font-family:var(--mono);color:var(--ink)">${c===' '?'space':c.toUpperCase()}</b> ใช้${FNAME[f]}${HOME.includes(c)?' (ตำแหน่งวางมือ)':''}`;
+});
+
+/* เวอร์ชันโฮสต์เอง: ใช้ชุดประโยคในเกมเท่านั้น */
+const aiPool=()=>null;function updAI(){}
+
+function openBrief(i){
+  lvIdx=i;const L=LEVELS[i];
+  $('bTitle').textContent=`${flLabel(i)} · ${L.dept}`;$('bArt').innerHTML=L.week?ROOF_ART:FLOOR_ART[i];$('bEn').textContent=`${L.name} · ${L.en}`;$('bRule').textContent=L.rule;
+  $('bSx').innerHTML=L.sx.map(s=>`<span class="chip">${s}</span>`).join('');
+  const seen=store.get('tt-guide-seen');$('guide').open=!seen;store.set('tt-guide-seen',true);
+  if(gFocus)focusFinger(gFocus);
+  updAI();
+  show('brief');$('startBtn').focus();
+}
+$('startBtn').addEventListener('click',()=>startRound(true));
+
+/* ---------- build round ---------- */
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function buildQueue(L){
+  if(mode==='sent'){
+    const ai=aiPool(L.id),src=ai&&ai.length?ai:SENTS[L.id];
+    return shuffle(src).slice(0,limit?99:5).map(parseSent);
+  }
+  if(L.fams){
+    return shuffle(L.fams).slice(0,limit?99:3).flatMap((f,fi)=>f.map((w,k)=>({w:w[0],pos:w[1],th:w[2],sfx:w[3]||'',fam:f,fk:k})));
+  }
+  return shuffle(L.words).slice(0,limit?99:10).map(w=>({w:w[0],th:w[1],ex:w[2],sfx:w[3]||'',pos:w[4]||L.pos}));
+}
+
+/* ---------- keyboard & hands ---------- */
+function buildKb(){
+  $('kb').innerHTML=ROWS.map(r=>`<div class="row">${[...r].map(c=>`<button class="key${c==='f'||c==='j'?' home':''}" data-k="${c}" tabindex="-1" style="--fc:var(--${K2F[c]})">${c}</button>`).join('')}</div>`).join('')
+   +`<div class="row"><button class="key space" data-k=" " tabindex="-1" style="--fc:var(--th)">space</button></div>`;
+  $('hands').innerHTML=handHTML(HANDS[0])+handHTML(HANDS[1]);
+}
+$('kb').addEventListener('pointerdown',e=>{const k=e.target.closest('.key');if(!k)return;e.preventDefault();typeChar(k.dataset.k);});
+
+/* ---------- round ---------- */
+const WARM=['fj','dk','sl','a;','fjdk','sla;','asdf','jkl;','fdsa',';lkj','fj dk','sl a;','ff jj','dd kk','ss ll','fg hj','fr ju','fv jm'];
+const WARM_SEC=10;
+function startRound(warm){
+  if(S&&S.timer)clearTimeout(S.timer);
+  const L=LEVELS[lvIdx];
+  if(warm){
+    const q=WARM.slice(0,4).concat(shuffle(WARM.slice(4))).map(w=>({w,th:'กดแล้วกลับมาวางแถวกลาง',pos:'warm',sfx:''}));
+    S={L,q,i:0,pos:0,correct:0,errs:0,keyErr:{},missed:new Set(),t0:performance.now(),t1:0,tries:0,hinted:new Set(),lock:false,timer:null,done:0,limit:WARM_SEC,warm:true};
+    $('pLv').textContent='วอร์มนิ้ว';
+  }else{
+    S={L,q:buildQueue(L),i:0,pos:0,correct:0,errs:0,keyErr:{},missed:new Set(),t0:0,t1:0,tries:0,hinted:new Set(),lock:false,timer:null,done:0,limit};
+    $('pLv').textContent=`${flLabel(lvIdx)} ${L.dept}`;
+  }
+  resetLog();mascotStart();
+  $('card').classList.toggle('warm',!!warm);$('skipWarm').classList.toggle('hidden',!warm);
+  lastTick=0;show('play');renderWord();updStats();focusTrap();
+}
+function endWarm(){
+  if(!S||!S.warm)return;S.lock=true;S.t1=1;sfx('done');
+  const g=document.createElement('div');g.className='go';g.innerHTML='<span>เริ่ม!</span>';document.body.appendChild(g);setTimeout(()=>g.remove(),950);
+  startRound(false);
+}
+$('skipWarm').addEventListener('pointerdown',e=>{e.preventDefault();endWarm();});
+function endRound(){if(S&&S.timer)clearTimeout(S.timer);if(S)S.lock=true;}
+function cur(){return S.q[S.i]}
+function renderWord(){
+  const W=cur(),w=W.w,sfxStart=W.sfx&&w.endsWith(W.sfx)?w.length-W.sfx.length:99;
+  $('pCount').textContent=S.warm?'แถวกลาง':S.limit?`${S.done} ${W.sent?'ประโยค':'คำ'}`:`${S.i+1}/${S.q.length}`;
+  if(!S.warm)$('pBar').style.width=(S.i/S.q.length*100)+'%';
+  $('wPos').textContent=S.warm?'วอร์มนิ้ว':POS[W.pos];$('wTh').textContent=W.th;
+  const hide=mode==='spell'&&!S.warm;
+  $('word').classList.remove('complete');
+  $('word').classList.toggle('sentence',!!W.sent);
+  if(W.sent){
+    let h='',open=false;
+    [...w].forEach((c,k)=>{
+      const cls='ch'+(k<S.pos?' done':k===S.pos?' cur':'')+(W.b[k]?' bt':'')+(c===' '?' sp':'');
+      if(c===' '){if(open){h+='</span>';open=false}h+=`<span class="${cls}" data-i="${k}">\u00a0</span><wbr>`;}
+      else{if(!open){h+='<span class="wd">';open=true}h+=`<span class="${cls}" data-i="${k}">${esc(c)}</span>`;}
+    });
+    if(open)h+='</span>';
+    $('word').innerHTML=h;
+    $('wEx').innerHTML=`<span class="gloss">${W.terms.map(t=>{const g=GLOSS[t]||{};return `<span><b>${esc(t)}</b><em>${PSHORT[g.pos]||''}</em>${g.th||''}</span>`}).join('')}</span>`;
+    $('chain').classList.add('hidden');highlight();return;
+  }
+  $('word').innerHTML=[...w].map((c,k)=>{
+    const cls=[k<S.pos?'done':k===S.pos?'cur':'',c===' '?'sp':'',(!hide||k<S.pos)&&k>=sfxStart?'sfx':'',S.hinted.has(k)?'hintd':''].join(' ');
+    const shown=c===' '?'\u00a0':(hide&&k>=S.pos?'_':c);
+    return `<span class="${cls}" data-i="${k}">${shown}</span>`}).join('');
+  $('wEx').innerHTML=W.ex?esc(W.ex).replace('___','<span style="letter-spacing:.1em">____</span>'):'';
+  const ch=$('chain');
+  if(W.fam){ch.classList.remove('hidden');ch.innerHTML=W.fam.map((f,k)=>`<span class="${k===W.fk?'on':k<W.fk?'ok':''}">${f[1]}. ${k<W.fk||(!hide&&k===W.fk)?f[0]:'…'}</span>`).join('');}
+  else ch.classList.add('hidden');
+  highlight();
+}
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function highlight(wrongKey){
+  document.querySelectorAll('.key.target,.key.wrong').forEach(k=>k.classList.remove('target','wrong'));
+  document.querySelectorAll('.fg.on').forEach(f=>f.classList.remove('on'));
+  const W=cur();if(!W||S.pos>=W.w.length){$('fhint').innerHTML='';return;}
+  const c=W.w[S.pos].toLowerCase(),f=K2F[c];
+  const reveal=mode==='see'||S.warm||S.tries>=2;
+  if(reveal){
+    const k=document.querySelector(`.key[data-k="${CSS.escape(c)}"]`);if(k)k.classList.add('target');
+    document.querySelectorAll(`.fg[data-f="${f}"]`).forEach(x=>x.classList.add('on'));
+    $('fhint').innerHTML=`<span class="dot" style="background:var(--${f})"></span>กด <b style="font-family:var(--mono)">${c===' '?'space':c}</b> ด้วย${FNAME[f]}`;
+  } else $('fhint').innerHTML=S.tries===1?'<span style="color:var(--muted)">ลองอีกครั้ง ผิดอีกจะเฉลยตัวนี้</span>':'';
+  if(wrongKey){const k=document.querySelector(`.key[data-k="${CSS.escape(wrongKey)}"]`);if(k){k.classList.add('wrong');setTimeout(()=>k.classList.remove('wrong'),220);}}
+}
+function typeChar(c){
+  if(!S||S.lock||$('play').classList.contains('hidden'))return;
+  c=c.toLowerCase();
+  const W=cur(),want=W.w[S.pos].toLowerCase();
+  if(!S.t0)S.t0=performance.now();
+  if(c===want){
+    sfx(c===' '?'space':'key');
+    S.correct++;S.pos++;S.tries=0;mascotOk();
+    if(S.pos>=W.w.length){wordDone();return;}
+    renderWord();
+  }else{
+    sfx('wrong');
+    S.errs++;S.tries++;S.keyErr[want]=(S.keyErr[want]||0)+1;mascotBad();
+    if(W.sent){if(W.b[S.pos])S.missed.add(W.b[S.pos]);}else S.missed.add(W.w);
+    if(mode==='spell'&&!S.warm&&S.tries>=2)S.hinted.add(S.pos);
+    renderWord();
+    const sp=$('word').querySelector(`span[data-i="${S.pos}"]`);
+    if(sp){sp.classList.add('err');if(mode==='spell'&&!S.warm&&S.tries>=2)sp.textContent=want===' '?'\u00a0':want;}
+    highlight(c);
+  }
+  updStats();
+}
+function wordDone(){
+  const W=cur();
+  if(S.warm){sfx('key');S.i=(S.i+1)%S.q.length;S.pos=0;S.tries=0;renderWord();return;}
+  S.lock=true;
+  renderWord();$('word').classList.add('complete');
+  if(mode==='spell')$('word').querySelectorAll('span').forEach((s,k)=>{if(W.w[k]!==' ')s.textContent=W.w[k]});
+  if(W.ex)$('wEx').innerHTML=esc(W.ex).replace('___',`<b>${esc(W.w)}</b>`);
+  if(W.fam)$('chain').innerHTML=W.fam.map((f,k)=>`<span class="${k<=W.fk?'ok':''}">${f[1]}. ${k<=W.fk?f[0]:'…'}</span>`).join('');
+  speak(W.w);mascotDone();
+  logWords(W.sent?W.terms.map(t=>({w:t,...(GLOSS[t]||{})})):[{w:W.w,th:W.th,pos:W.pos}]);
+  S.done++;sfx('done');
+  S.timer=setTimeout(nextWord,W.sent?1400:W.ex?1100:750);
+}
+/* ---- ตัวละครพิกเซล: PU (เด็กผู้ชายเสื้อฮู้ดแดง) + เฉาก๊วย (แมวหน้ากากขาวดำ) ---- */
+const PAL={h:'#6B3F22',H:'#3E2414',s:'#F2C3A0',i:'#4A7FB5',k:'#1E2430',m:'#9A4A3A',r:'#C8444A',R:'#B52B2B',D:'#7A1C1C',g:'#8C8F96',d:'#3E5F8F',w:'#F4F4F4',b:'#5C9EDB',
+  K:'#1B1B20',W:'#FAFAFA',y:'#E8A93A',n:'#E89AAE',B:'#4A7CC0',f:'#9CC0E6',G:'#6E6E7A'};
+const SPR={
+ idle:['..hh.hhhhh..','.hhhhhhhhhh.','.hhhhhhhhhhh','..hsshhssh..','..sissssis..','..sssmmsss..','...ssssss...','..RRDggDRR..','.RRRDRRDRRR.','.RRRDRRDRRR.','.sDDDDDDDDs.','..dddddddd..','..ddd..ddd..','..ddd..ddd..','..wRk..wRk..'],
+ blink:['..hh.hhhhh..','.hhhhhhhhhh.','.hhhhhhhhhhh','..hsshhssh..','..skssssks..','..sssmmsss..','...ssssss...','..RRDggDRR..','.RRRDRRDRRR.','.RRRDRRDRRR.','.sDDDDDDDDs.','..dddddddd..','..ddd..ddd..','..ddd..ddd..','..wRk..wRk..'],
+ happy:['s.hh.hhhh..s','R.hhhhhhhh.R','R.hhhhhhhh.R','R.hsshhssh.R','R.sissssis.R','RR.srrrrs.RR','.R.ssssss.R.','..RRDggDRR..','..RRDRRDRR..','..RRDRRDRR..','..DDDDDDDD..','..dddddddd..','..ddd..ddd..','.ddd....ddd.','.wRk....wRk.'],
+ sad:['..hh.hhhhh..','.hhhhhhhhhh.','.hhhhhhhhhhh','..hsshhssh..','..sHssssHs..','..sissssis..','..bssmmsss..','...ssssss...','..RRDggDRR..','.RRRDRRDRRR.','.sDDDDDDDDs.','..dddddddd..','..ddd..ddd..','..ddd..ddd..','..wRk..wRk..'],
+ jelly:['.K........K.','.KnK....KnK.','.KKKKKKKKKK.','.KKKKWWKKKK.','.KyKWWWWKyK.','.KWWWnnWWWK.','..WWWWWWWW..','..BBBBfBBB..','.KKWWWWWWKK.','.KKWWWWWWKK.','.KKWWWWWWKKK','..WW.KK.WW..'],
+ jellyz:['............','............','.K........K.','.KnKKKKKKnK.','.KKKKWWKKKK.','.KGKWWWWKGK.','.KWWWnnWWWK.','..BBBBfBBB..','KKKWWWWWWKKK','KKKWWWWWWKKK','KKKKKKKKKKKK','.WW......WW.']
+};
+function pix(name,sc){const m=SPR[name],h=m.length,w=m[0].length;let r='';
+  m.forEach((row,y)=>{let x=0;while(x<w){const c=row[x];if(c==='.'){x++;continue}let n=1;while(row[x+n]===c)n++;r+=`<rect x="${x}" y="${y}" width="${n}" height="1" fill="${PAL[c]}"/>`;x+=n;}});
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w*sc}" height="${h*sc}">${r}</svg>`;}
+const PX={};Object.keys(SPR).forEach(k=>PX[k]=pix(k,k.startsWith('jelly')?5:4));
+let face='',faceT=null,bubT=null,catT=null,blinkT=null,streak=0;
+function setFace(f,ms){
+  if(face!==f){$('intern').innerHTML=PX[f];face=f;}
+  clearTimeout(faceT);if(ms)faceT=setTimeout(()=>setFace('idle'),ms);
+}
+function anim(el,c){el.classList.remove('jump','oops','wake');void el.offsetWidth;el.classList.add(c);}
+function say(t,good,ms=1300){const b=$('bubble');b.textContent=t;b.className='bubble'+(good?' good':'');clearTimeout(bubT);bubT=setTimeout(()=>b.classList.add('hidden'),ms);}
+function catSleep(z){const w=document.querySelector('.catw');w.classList.toggle('sleep',z);$('cat').innerHTML=z?PX.jellyz:PX.jelly;}
+function poke(){
+  if(document.querySelector('.catw').classList.contains('sleep')){catSleep(false);anim($('cat'),'wake');}
+  clearTimeout(catT);catT=setTimeout(()=>catSleep(true),5000);
+}
+function blinkLoop(){clearTimeout(blinkT);blinkT=setTimeout(()=>{if(face==='idle'&&!$('play').classList.contains('hidden')){$('intern').innerHTML=PX.blink;setTimeout(()=>{if(face==='idle')$('intern').innerHTML=PX.idle},140);}blinkLoop();},2600+Math.random()*2500);}
+const CHEER=['เยี่ยม!','ถูกต้อง!','เก่งมาก!','ไปต่อ!','สุดยอด!','ใช่เลย!'];
+function mascotStart(){
+  streak=0;face='';setFace('idle');catSleep(false);poke();blinkLoop();
+  say(S.warm?'วอร์มนิ้วกันก่อน!':'ลุยเลย!',true,1600);
+}
+function mascotOk(){poke();}
+function mascotBad(){poke();streak=-1;setFace('sad',650);anim($('intern'),'oops');if(S.tries>=3)say('ใจเย็น ๆ นะ',false,1200);}
+function mascotDone(){
+  streak=streak<0?0:streak+1;setFace('happy',800);anim($('intern'),'jump');
+  say(streak>=3?`คอมโบ x${streak}!`:CHEER[Math.floor(Math.random()*CHEER.length)],true);
+}
+function mascotResult(pass){
+  $('rIntern').innerHTML=pix(pass?'happy':'sad',5);$('rIntern').classList.toggle('cheer',pass);
+  $('rCat').innerHTML=pix(pass?'jelly':'jellyz',5);
+}
+let LOG=[];
+function resetLog(){
+  LOG=[];$('wlog').classList.toggle('hidden',S.warm);renderLog(0);
+}
+function logWords(arr){
+  arr.forEach(x=>{LOG=LOG.filter(y=>y.w!==x.w);LOG.unshift(x);});
+  renderLog(arr.length);
+}
+function renderLog(fresh){
+  $('wlogN').textContent=LOG.length;
+  $('wlogEmpty').classList.toggle('hidden',LOG.length>0);
+  $('wlogList').innerHTML=LOG.map((x,k)=>`<li class="${k<fresh?'new':''}"><button type="button" data-w="${esc(x.w)}" title="ฟังเสียงอ่าน"><b>${esc(x.w)}</b>${PSHORT[x.pos]?`<em>${PSHORT[x.pos]}</em>`:''}<span>${esc(x.th||'')}</span></button></li>`).join('');
+  $('wlogList').scrollTop=0;
+}
+$('wlogList').addEventListener('click',e=>{const b=e.target.closest('button');if(b)speak(b.dataset.w);setTimeout(focusTrap,0);});
+function nextWord(){
+  if(!S)return;clearTimeout(S.timer);S.timer=null;
+  S.i++;S.pos=0;S.tries=0;S.hinted=new Set();
+  if(S.i>=S.q.length){finish(false);return;}
+  S.lock=false;renderWord();
+}
+function elapsed(){return S.t0?((S.t1||performance.now())-S.t0):0}
+function calc(){const m=elapsed()/60000;return{wpm:m>0?Math.round(S.correct/5/m):0,acc:S.correct+S.errs?Math.round(S.correct/(S.correct+S.errs)*100):100}}
+const fmt=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`};
+function updTime(){
+  if(!S)return;const t=$('sTime');
+  if(S.limit){const left=S.limit*1000-elapsed();t.textContent=fmt(left);t.classList.toggle('low',left<=10000);$('sTimeLbl').textContent=S.warm?'วอร์ม':'เหลือ';if(S.warm)$('pBar').style.width=Math.min(100,elapsed()/(S.limit*10))+'%';return left;}
+  t.textContent=fmt(elapsed());t.classList.remove('low');$('sTimeLbl').textContent='เวลา';
+}
+function updStats(){const c=calc();$('sWpm').textContent=c.wpm;$('sAcc').textContent=c.acc+'%';updTime();}
+let lastTick=0;
+setInterval(()=>{
+  if(!S||S.t1||!S.t0||$('play').classList.contains('hidden'))return;
+  updStats();
+  if(S.limit){const left=S.limit*1000-elapsed();const s=Math.ceil(left/1000);
+    if(left<=0){S.warm?endWarm():finish(true);return;}
+    if(s<=5&&s!==lastTick){lastTick=s;sfx('tick');}}
+},200);
+
+function finish(timeUp){
+  if(S.t1)return;
+  S.t1=performance.now();if(S.limit&&timeUp)S.t1=S.t0+S.limit*1000;
+  S.lock=true;clearTimeout(S.timer);sfx(timeUp?'timeup':'finish');
+  const c=calc(),key=bestKey(S.L.id),b=store.get(key);
+  const isBest=!b||c.wpm>b.wpm||(c.wpm===b.wpm&&c.acc>b.acc);
+  if(isBest)store.set(key,c);
+  const PASS_ACC=75,minChars=S.limit?15:0,passNow=c.acc>=PASS_ACC&&S.correct>=minChars,isWk=!!S.L.week,wasOpen=!isWk&&lvIdx<NF-1&&unlocked(lvIdx+1);
+  if(!isWk&&passNow&&!passed().includes(S.L.id))store.set('tt-passed',passed().concat(S.L.id));
+  if(isWk&&!weeksPlayed().includes(S.L.wk.no))store.set('tt-weeks',weeksPlayed().concat(S.L.wk.no).slice(-60));
+  const nowOpen=!isWk&&lvIdx<NF-1&&unlocked(lvIdx+1),toRoof=!isWk&&lvIdx===NF-1&&passNow;
+  $('rTitle').innerHTML=(timeUp?'หมดเวลา · ':'')+(c.acc>=95?'แม่นมาก':c.acc>=75?'ทำได้ดี':'เกือบแล้ว')+(isBest?'<span class="newbest">สถิติใหม่</span>':'');
+  $('rUnlock').innerHTML=isWk?`เล่นคำใหม่ประจำสัปดาห์ต่อเนื่อง <b>${weekStreak()} สัปดาห์</b> ชุดใหม่มาในอีก ${S.L.wk.left} วัน`:lvIdx>=NF-1?(passNow?`ผ่านครบ ${NF} ชั้นของอาคารแล้ว ขึ้นไปเล่นคำใหม่ประจำสัปดาห์ที่ดาดฟ้าได้เลย`:''):nowOpen&&!wasOpen?`ปลดล็อก<b>ชั้น ${lvIdx+2} ${LEVELS[lvIdx+1].dept}</b>แล้ว`:nowOpen?'':(!passNow&&c.acc<PASS_ACC?`ต้องแม่นยำ ${PASS_ACC}% ขึ้นไปจึงจะขึ้นชั้น ${lvIdx+2} ได้ รอบนี้ได้ ${c.acc}% ค่อย ๆ พิมพ์ได้เลย ความเร็วไม่มีผลกับการผ่านชั้น`:`รอบจับเวลาต้องพิมพ์ให้ได้อย่างน้อย 15 ตัวอักษร หรือเลือกเวลาแบบ "ครบชุด" ซึ่งไม่มีเวลากดดัน`);
+  $('rUnlock').classList.toggle('hidden',!$('rUnlock').innerHTML);
+  $('rSub').textContent=`${flLabel(lvIdx)} ${S.L.dept} · ${mode==='see'?'ฝึกนิ้ว':mode==='spell'?'ทดสอบสะกด':'พิมพ์ประโยค'} · ${S.limit?`จำกัด ${S.limit} วิ · พิมพ์ได้ ${S.done} ${mode==='sent'?'ประโยค':'คำ'}`:`${S.q.length} ${mode==='sent'?'ประโยค':'คำ'}`}`;
+  $('rWpm').textContent=c.wpm;$('rAcc').textContent=c.acc+'%';
+  $('rTime').textContent=fmt(elapsed());
+  const weak=Object.entries(S.keyErr).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  $('weakWrap').classList.toggle('hidden',!weak.length);
+  $('rWeak').innerHTML=weak.map(([k,n])=>`<li style="--fc:var(--${K2F[k]})"><kbd>${k===' '?'␣':k}</kbd>${FNAME[K2F[k]]} · พลาด ${n}</li>`).join('');
+  const miss=[...S.missed];const byW=Object.fromEntries(S.q.map(q=>[q.w,q]));
+  $('missWrap').classList.toggle('hidden',!miss.length);
+  $('rMiss').innerHTML=miss.map(w=>`<li><b>${esc(w)}</b> — ${(GLOSS[w]||byW[w]||{}).th||''}</li>`).join('');
+  $('nextBtn').classList.toggle('hidden',!nowOpen&&!toRoof);if(nowOpen)$('nextBtn').textContent=`ขึ้นลิฟต์ไปชั้น ${lvIdx+2}`;if(toRoof)$('nextBtn').textContent='ขึ้นดาดฟ้า';
+  mascotResult(passNow);
+  show('result');$('againBtn').focus();
+}
+$('againBtn').addEventListener('click',()=>startRound(true));
+$('nextBtn').addEventListener('click',()=>openBrief(lvIdx+1));
+
+/* ---------- input ---------- */
+function focusTrap(){try{trap.focus({preventScroll:true})}catch(e){trap.focus()}}
+trap.addEventListener('input',()=>{const v=trap.value;trap.value='';for(const ch of v)typeChar(ch);});
+let blurT=null;
+const playing=()=>!$('play').classList.contains('hidden');
+trap.addEventListener('blur',()=>{clearTimeout(blurT);blurT=setTimeout(()=>{if(playing()&&document.activeElement!==trap)$('tapover').classList.remove('hidden');},600);});
+trap.addEventListener('focus',()=>{clearTimeout(blurT);$('tapover').classList.add('hidden');});
+$('play').addEventListener('click',e=>{if(!e.target.closest('[data-go]'))focusTrap();});
+window.addEventListener('focus',()=>{if(playing())focusTrap();});
+document.addEventListener('keydown',e=>{
+  if($('play').classList.contains('hidden'))return;
+  if(e.key==='Escape'){endRound();renderHome();show('home');return;}
+  if(e.key==='Enter'&&S&&S.warm){e.preventDefault();endWarm();return;}
+  if(e.key==='Enter'&&S&&S.timer){e.preventDefault();nextWord();return;}
+  if(document.activeElement!==trap&&e.key.length===1&&!e.ctrlKey&&!e.metaKey){e.preventDefault();focusTrap();$('tapover').classList.add('hidden');typeChar(e.key);}
+  if(e.key===' '&&document.activeElement!==trap)e.preventDefault();
+});
+
+/* ---------- key sounds (Web Audio) ---------- */
+let AC=null;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}if(AC.state==='suspended')AC.resume();return AC}
+function tone(f,dur,{type='sine',vol=.08,at=0,to=null}={}){
+  const a=ac();if(!a)return;const t=a.currentTime+at,o=a.createOscillator(),g=a.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(to)o.frequency.exponentialRampToValueAtTime(to,t+dur);
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g).connect(a.destination);o.start(t);o.stop(t+dur+.02);
+}
+function noise(dur,vol,hp){
+  const a=ac();if(!a)return;const n=a.sampleRate*dur|0,buf=a.createBuffer(1,n,a.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,4);
+  const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
+  f.type='highpass';f.frequency.value=hp;g.gain.value=vol;s.buffer=buf;s.connect(f).connect(g).connect(a.destination);s.start();
+}
+// band-limited noise burst: type = 'bandpass' | 'highpass' | 'lowpass'
+function nburst(dur,vol,type,freq,Q=1,at=0,decay=4){
+  const a=ac();if(!a)return;const n=Math.max(1,a.sampleRate*dur|0),buf=a.createBuffer(1,n,a.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,decay);
+  const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
+  f.type=type;f.frequency.value=freq;f.Q.value=Q;g.gain.value=vol;s.buffer=buf;s.connect(f).connect(g).connect(a.destination);s.start(a.currentTime+at);
+}
+// soft style: smooth pre-lubed linear switch — no tactile click, soft plastic bottom-out with a deep "thock" body
+function limeDown(space){
+  const j=()=>0.9+Math.random()*0.2;
+  if(space){
+    nburst(.07,.55,'lowpass',520*j(),.8,0,3);
+    tone(118*j(),.09,{type:'sine',vol:.14,to:68});
+    nburst(.03,.12,'bandpass',1500*j(),1.2,.004,5);
+  }else{
+    nburst(.045,.5,'bandpass',420*j(),2.2,0,3);      // body / case resonance
+    nburst(.018,.22,'bandpass',1900*j(),1.4,0,6);    // keycap on housing
+    tone(190*j(),.05,{type:'sine',vol:.09,to:120});  // low thump
+  }
+}
+function limeUp(space){nburst(space?.03:.016,space?.12:.08,'bandpass',(space?900:2300)*(0.9+Math.random()*.2),1.6,0,6);}
+function sfx(kind){
+  if(!sound)return;
+  try{
+    if(swStyle==='lime'&&(kind==='key'||kind==='space')){limeDown(kind==='space');}
+    else if(kind==='up'||kind==='upspace'){if(swStyle==='lime')limeUp(kind==='upspace');}
+    else if(kind==='wrong'&&swStyle==='lime'){limeDown(false);tone(160,.12,{type:'triangle',vol:.05,to:110,at:.02});}
+    else if(kind==='key'){noise(.03,.35,2500+Math.random()*800);tone(150,.04,{type:'triangle',vol:.05});}
+    else if(kind==='space'){noise(.05,.3,1200);tone(110,.06,{type:'triangle',vol:.06});}
+    else if(kind==='wrong'){tone(190,.14,{type:'square',vol:.045,to:120});}
+    else if(kind==='done'){tone(660,.12,{vol:.06});tone(990,.16,{vol:.06,at:.08});}
+    else if(kind==='ding'){tone(1318,.5,{vol:.07});tone(1046,.7,{vol:.06,at:.18});}
+    else if(kind==='tick'){tone(1200,.05,{type:'square',vol:.03});}
+    else if(kind==='timeup'){tone(520,.18,{vol:.07});tone(390,.3,{vol:.07,at:.16});}
+    else if(kind==='finish'){[523,659,784,1047].forEach((f,i)=>tone(f,.2,{vol:.06,at:i*.09}));}
+  }catch(e){}
+}
+
+document.addEventListener('keyup',e=>{
+  if(swStyle!=='lime'||e.ctrlKey||e.metaKey)return;
+  const vis=!$('play').classList.contains('hidden')||(!$('brief').classList.contains('hidden')&&$('guide').open);
+  if(!vis)return;
+  if(e.key===' ')sfx('upspace');else if(e.key.length===1)sfx('up');
+});
+
+/* ---------- speech ---------- */
+function speak(t){if(!sound)return;try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+
+buildGuide();buildKb();setSound();renderHome();
+</script>
+</body>
+</html>
